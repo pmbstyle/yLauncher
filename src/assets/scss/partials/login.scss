@@ -1,0 +1,136 @@
+#loginWrap {
+    width:100%;
+    height:100%;
+    padding-top:10px;
+    @include flex-column(center,center);
+    .login {
+        width:572px;
+        height:500px;
+        position: relative;
+        background:url(../images/login-background.png) no-repeat 0 0;
+        &:before {
+            content:'';
+            display:block;
+            width:100%;
+            height:100%;
+            position: absolute;
+            width: 556px;
+            height: 484px;
+            left: 9px;
+            top: 9px;
+            z-index: -1;
+            animation: bg-flicker 5s ease-in-out infinite;
+        }
+        .close {
+            top:-8px;
+            left: calc(50% - 15px);
+        }
+        .header {
+            width:100%;
+            height:69px;
+            @include flex-row(center, center);
+            background:url(../images/login-header.png) no-repeat center top;
+            color:$gold-white;
+            font-size: 2em;
+            margin-top: 10px;
+            padding-bottom: 10px;
+            position: relative;
+            user-select:none;
+            -webkit-app-region: drag;
+            span {
+                color:$dark-red;
+                position: absolute;
+                margin-left: 224px;
+                margin-bottom: 30px;
+                text-shadow: rgba(0,0,0,.3) 1px 0px 3px;
+                font-style: italic;
+            }
+        }
+        .description {
+            padding:30px 0 40px 0;
+            color:$text-color;
+            text-align:center;
+            font-size:1.2em;
+            user-select:none;
+            &.error {
+                color:$normal-red;
+            }
+        }
+        .form {
+            width:80%;
+            margin:0 auto;
+            .form-input {
+                margin-bottom:30px;
+            }
+            .login-btn {
+                width:276px;
+                height:84px;
+                background:url(../images/green-btn.png) no-repeat 0 0;
+                border:0;
+                outline:none;
+                position: absolute;
+                bottom: -34px;
+                left: calc(50% - 138px);
+                cursor: pointer;
+                color:$gold-white;
+                text-shadow: rgba(0,0,0,.3) 1px 0px 3px;
+                font-size:2em;
+                text-transform: uppercase;
+                font-weight: 600;
+                &:hover {
+                    background:url(../images/green-btn-hover.png) no-repeat 0 0;
+                }
+            }
+        }
+    }
+}
+@keyframes bg-flicker {
+    0% {
+        opacity:0.05;
+        box-shadow:
+            inset 0 0 10px whitesmoke,
+            inset 10px 0 10px $light-gold,
+            inset -10px 0 20px $light-gold,
+            inset 10px 0 100px $light-gold,
+            inset -10px 0 100px $light-gold,
+            0 0 20px #fff,
+            -10px 0 20px $light-gold,
+            10px 0 20px $light-gold;
+    }
+    25% {
+        opacity:0.15;
+        box-shadow:
+            inset 0 0 10px whitesmoke,
+            inset 10px 0 10px $dark-red,
+            inset -10px 0 20px $dark-red,
+            inset 10px 0 100px $dark-red,
+            inset -10px 0 100px $dark-red,
+            0 0 20px #fff,
+            -10px 0 20px $dark-red,
+            10px 0 20px $dark-red;
+    }
+    25% {
+        opacity:0.15;
+        box-shadow:
+            inset 0 0 10px whitesmoke,
+            inset 10px 0 10px #ea922a,
+            inset -10px 0 20px #ea922a,
+            inset 10px 0 100px #ea922a,
+            inset -10px 0 100px #ea922a,
+            0 0 20px #fff,
+            -10px 0 20px #ea922a,
+            10px 0 20px #ea922a;
+    }
+    100% {
+        opacity:0.05;
+        box-shadow:
+            inset 0 0 10px whitesmoke,
+            inset 10px 0 10px $light-gold,
+            inset -10px 0 20px $light-gold,
+            inset 10px 0 100px $light-gold,
+            inset -10px 0 100px $light-gold,
+            0 0 20px #fff,
+            -10px 0 20px $light-gold,
+            10px 0 20px $light-gold;
+    }
+}
