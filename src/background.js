@@ -3,8 +3,39 @@
 import { app, protocol, BrowserWindow, ipcMain } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
-const path = require("path");
-const fs = require("fs");
+const electronOauth2 = require('electron-oauth2')
+const path = require("path")
+const fs = require("fs")
+const mongoose = require('mongoose')
+const profileModel = require('./models/profile')
+const authWindowParams = {
+  alwaysOnTop: true,
+  autoHideMenuBar: true,
+  webPreferences: {
+    nodeIntegration: false
+  }
+}
+const oauthConfig = {
+    clientId: process.env.VUE_APP_DISCORD_CLIENT_ID,
+    clientSecret: process.env.VUE_APP_DISCORD_CLIENT_SECRET,
+    authorizationUrl: 'https://discord.com/api/oauth2/authorize',
+    tokenUrl: 'https://discord.com/api/oauth2/token',
+    useBasicAuthorizationHeader: false,
+    // don't touch me
+    redirectUri: 'http://localhost'
+}
+const discordOAuth = electronOauth2(oauthConfig, authWindowParams)
+
+mongoose.connect(process.env.VUE_APP_MONGODB_SRV, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+}).then(()=> {
+    console.log('Connected to MongoDB')
+}).catch((err) => {
+    console.log('Alarm!')
+    console.log(err)
+})
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -58,6 +89,41 @@ async function createWindow() {
   })
   ipcMain.on('window-close', function () {
       win.close();
+  })
+  ipcMain.on('discord-oauth', (event, arg) => {
+      discordOAuth.getAccessToken({
+        scope: 'identify'
+      })
+      .then(auth => {
+        event.sender.send('discord-oauth-reply', auth);
+      }, err => {
+        console.log('Error while getting token', err);
+      })
+  })
+  ipcMain.on('check-discord-account', async (event, arg) => {
+      let profileData
+      try {
+          profileData = await profileModel.findOne({discordID: arg.username+'#'+arg.discriminator})
+          event.sender.send('user-confirm', {discordID:profileData.discordID,minecraftID:profileData.minecraftID});
+      } catch (err) {
+          console.log(err)
+      }
+  })
+  ipcMain.on('check-mojang-account', async (event, arg) => {
+      let profileData
+      try {
+          profileData = await profileModel.findOne({minecraftID: arg})
+          if(profileData) {
+            event.sender.send('user-confirm', {
+              discordID:profileData.discordID,
+              minecraftID:profileData.minecraftID
+            });
+          } else {
+            event.sender.send('user-confirm', null)
+          }
+      } catch (err) {
+          console.log(err)
+      }
   })
 }
 
