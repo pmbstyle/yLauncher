@@ -7,6 +7,7 @@ import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 import './assets/scss/app.scss'
 Vue.config.productionTip = false
+import './ml'
 
 new Vue({
   router,

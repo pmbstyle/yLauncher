@@ -1,23 +1,25 @@
 <template>
 	<div id="loginWrap">
-		<div class="login">
+		<div class="login" :class="{'in-progress':inProgress}">
 			<div class="close" @click="close()">
 				<div class="close-wrap">
 					<div class="close-ico"></div>
 				</div>
 			</div>
 			<div class="header">YC Launcher<span>beta</span></div>
-			<div class="description" :class="{error:loginError}">{{descMsg}}
-				<p><button @click="loginDiscord()">Discord</button></p>
+			<div class="discord-auth" @click="loginDiscord()">
+				<div class="discord-ico"></div>
+				<div class="discord-title">{{$ml.get('discordLogin')}}</div>
 			</div>
+			<div class="description" :class="{error:loginError}">{{descriptionMsg}}</div>
 			<div class="form">
 				<input type="text" class="form-input" placeholder="Email" v-model="formUser.login">
 				<input type="password" class="form-input" placeholder="Password" v-model="formUser.password">
 				<div class="save-login checkbox" @click="save = !save">
 					<div class="box" :class="{'active':save}"></div>
-					<div class="title">Save email for next login</div>
+					<div class="title">{{$ml.get('saveLogin')}}</div>
 				</div>
-				<button class="login-btn" @click="login()">Login</button>
+				<button class="login-btn" @click="!inProgress ? login() : ''">{{$ml.get('loginBtn')}}</button>
 			</div>
 		</div>
 	</div>
@@ -30,20 +32,33 @@ export default {
 	name: 'Login',
 	data: function(){
 		return {
-			descMsg: 'Sign in with your Mojang account',
 			formUser: {
 				login:'',
 				password:''
 			},
 			loginError:false,
-			save:false
+			save:false,
+			inProgress:false,
+			lang:null
+		}
+	},
+	watch: {
+		'preferences.lang': function(){
+			this.$ml.change(this.preferences.lang)
+			this.$forceUpdate()
 		}
 	},
 	computed: {
-		...mapGetters(['is_logged','user']),
+		...mapGetters(['preferences','is_logged','user']),
+		descriptionMsg: function(){
+			return !this.loginError ? this.$ml.get('loginDescription') : this.$ml.get('loginDescriptionError')
+		}
 	},
-	mounted: function () {
+	mounted: async function () {
+		this.uiSetLang(navigator.language)
+		//setting up login window size
 		ipcRenderer.send('login-window')
+		//on discord/mojang auth set token and check if account whitelisted
 		ipcRenderer.on('discord-oauth-reply', async (event, auth) => {
 			this.setToken(auth)
 			await this.getDiscordUser()
@@ -56,15 +71,16 @@ export default {
 			if(profile){
 				this.setAccount(profile)
 			} else {
+				this.inProgress = false
 				this.loginError = true
-				this.descMsg = 'Access denied, invalid credentials'
 			}		
 		})
 	},
 	methods: {
 		...mapActions(['getDiscordUser']),
-		...mapMutations(['setToken','setAccount']),
+		...mapMutations(['uiSetLang','setToken','setAccount']),
 		login: async function() {
+			this.inProgress = true
 			this.loginError = false
 			let authpath = 'https://authserver.mojang.com/authenticate'
 			let minecraftAgent = {
@@ -79,8 +95,8 @@ export default {
 				this.setToken({accessToken:response.data.accessToken,clientToken:response.data.clientToken})
 				ipcRenderer.send('check-mojang-account', response.data.selectedProfile.name)
 			}).catch(() => {
+				this.inProgress = false
 				this.loginError = true
-				this.descMsg = 'Access denied, invalid credentials'
 			})
 		},
 		loginDiscord: function() {

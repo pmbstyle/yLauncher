@@ -46,8 +46,33 @@
                 font-style: italic;
             }
         }
+        .discord-auth {
+            @include flex-row(center,center);
+            cursor: pointer;
+            width:max-content;
+            margin:0 auto;
+            .discord-ico {
+                width:80px;
+                height:80px;
+                background:url(../images/discord-ico.png) no-repeat 0 0;
+                opacity: .8;
+            }
+            .discord-title {
+                padding-left:15px;
+                color:$text-color;
+                font-size:1.2em;
+            }
+            &:hover {
+                .discord-ico {
+                    opacity: 1;
+                }
+                .discord-title {
+                    color:$gold-white;
+                }
+            }
+        }
         .description {
-            padding:30px 0 40px 0;
+            padding:20px 0 10px 0;
             color:$text-color;
             text-align:center;
             font-size:1.2em;
@@ -60,7 +85,7 @@
             width:80%;
             margin:0 auto;
             .form-input {
-                margin-bottom:30px;
+                margin-bottom:20px;
             }
             .login-btn {
                 width:276px;
@@ -80,6 +105,15 @@
                 &:hover {
                     background:url(../images/green-btn-hover.png) no-repeat 0 0;
                 }
+            }
+        }
+        &.in-progress {
+            .discord-auth,
+            .description,
+            .form input,
+            .fotm .checkbox {
+                opacity: .5;
+                cursor:wait;
             }
         }
     }
