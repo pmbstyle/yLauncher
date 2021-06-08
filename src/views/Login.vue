@@ -38,8 +38,7 @@ export default {
 			},
 			loginError:false,
 			save:false,
-			inProgress:false,
-			lang:null
+			inProgress:false
 		}
 	},
 	watch: {
@@ -50,6 +49,7 @@ export default {
 	},
 	computed: {
 		...mapGetters(['preferences','is_logged','user']),
+		//showing error msg
 		descriptionMsg: function(){
 			return !this.loginError ? this.$ml.get('loginDescription') : this.$ml.get('loginDescriptionError')
 		}
@@ -57,7 +57,7 @@ export default {
 	mounted: async function () {
 		this.uiSetLang(navigator.language)
 		//setting up login window size
-		ipcRenderer.send('login-window')
+		//ipcRenderer.send('login-window')
 		//on discord/mojang auth set token and check if account whitelisted
 		ipcRenderer.on('discord-oauth-reply', async (event, auth) => {
 			this.setToken(auth)
@@ -79,6 +79,7 @@ export default {
 	methods: {
 		...mapActions(['getDiscordUser']),
 		...mapMutations(['uiSetLang','setToken','setAccount']),
+		//mojan login
 		login: async function() {
 			this.inProgress = true
 			this.loginError = false
@@ -99,6 +100,7 @@ export default {
 				this.loginError = true
 			})
 		},
+		//discord login
 		loginDiscord: function() {
 			ipcRenderer.send('discord-oauth', 'getToken');
 		},

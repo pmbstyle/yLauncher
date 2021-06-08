@@ -3,6 +3,13 @@
 import { app, protocol, BrowserWindow, ipcMain } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
+if (require('electron-squirrel-startup')) app.quit()
+// if first time install on windows, do not run application, rather
+// let squirrel installer do its work
+const setupEvents = require('./installers/setup-events')
+if (setupEvents.handleSquirrelEvent()) {
+  process.exit()
+}
 const electronOauth2 = require('electron-oauth2')
 const path = require("path")
 const fs = require("fs")
@@ -47,8 +54,8 @@ protocol.registerSchemesAsPrivileged([
 async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 1200,
-    height: 768,
+    width: 650,
+    height: 650,
     transparent: true,
     resizable: false,
     frame:false,
@@ -73,8 +80,8 @@ async function createWindow() {
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
-  ipcMain.on('login-window', () => {
-    win.setSize(650, 650)
+  ipcMain.on('main-window', () => {
+    win.setSize(1200, 768)
   })
   ipcMain.on('window-min', function () {
     win.minimize();
@@ -87,9 +94,11 @@ async function createWindow() {
           win.maximize();
       }
   })
+  //Close window fn
   ipcMain.on('window-close', function () {
       win.close();
   })
+  //Discord auth window init
   ipcMain.on('discord-oauth', (event, arg) => {
       discordOAuth.getAccessToken({
         scope: 'identify'
@@ -100,6 +109,7 @@ async function createWindow() {
         console.log('Error while getting token', err);
       })
   })
+  //Checking if user has been approved to join in Discord
   ipcMain.on('check-discord-account', async (event, arg) => {
       let profileData
       try {

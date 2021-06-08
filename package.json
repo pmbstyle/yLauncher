@@ -2,6 +2,10 @@
   "name": "ylauncher",
   "version": "0.1.0",
   "private": true,
+  "description": "ytyaCraft Launcher",
+  "author": "ytyaCraft by pmb",
+  "license": "UNLICENSED",
+  "homepage": "http://ytyacraft.ru",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -16,7 +20,10 @@
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "dot-env": "^0.0.1",
+    "electron-builder-squirrel-windows": "^22.11.5",
     "electron-oauth2": "^3.0.0",
+    "electron-simple-publisher": "^2.0.0",
+    "electron-squirrel-startup": "^1.0.0",
     "mongodb-client-encryption": "^1.2.4",
     "mongoose": "^5.12.13",
     "vue": "^2.6.11",
@@ -40,5 +47,8 @@
     "sass-loader": "^8.0.2",
     "vue-cli-plugin-electron-builder": "~2.0.0",
     "vue-template-compiler": "^2.6.11"
+  },
+  "updater": {
+    "url": "https://raw.githubusercontent.com/pmbstyle/ylauncher/master/updates/{platform}-{arch}-{channel}.json"
   }
 }
