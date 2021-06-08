@@ -10,6 +10,10 @@ module.exports = {
           win: {
             icon: './icon.ico',
             target: 'squirrel'
+          },
+          squirrelWindows: {
+            iconUrl: 'http://ytyacraft.ru/images/icon.ico',
+            loadingGif: './setup.gif'
           }
         }
       }

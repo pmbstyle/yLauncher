@@ -23,7 +23,7 @@
         }
         .close {
             top:-8px;
-            left: calc(50% - 15px);
+            right:20px;
         }
         .header {
             width:100%;
@@ -38,9 +38,9 @@
             user-select:none;
             -webkit-app-region: drag;
             span {
-                color:$dark-red;
+                color:$normal-red;
                 position: absolute;
-                margin-left: 224px;
+                margin-left: 153px;
                 margin-bottom: 30px;
                 text-shadow: rgba(0,0,0,.3) 1px 0px 3px;
                 font-style: italic;

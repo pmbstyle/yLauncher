@@ -6,7 +6,7 @@
 					<div class="close-ico"></div>
 				</div>
 			</div>
-			<div class="header">YC Launcher<span>beta</span></div>
+			<div class="header">yLauncher<span>α</span></div>
 			<div class="discord-auth" @click="loginDiscord()">
 				<div class="discord-ico"></div>
 				<div class="discord-title">{{$ml.get('discordLogin')}}</div>
