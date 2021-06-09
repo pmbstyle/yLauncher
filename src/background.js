@@ -81,7 +81,7 @@ async function createWindow() {
     win.loadURL('app://./index.html')
   }
   ipcMain.on('main-window', () => {
-    win.setSize(1200, 768)
+    win.setSize(1200, 775)
   })
   ipcMain.on('window-min', function () {
     win.minimize();

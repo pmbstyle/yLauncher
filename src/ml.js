@@ -12,14 +12,16 @@ export default new MLCreate({
             loginDescription: "Либо при помощи аккаунта Mojang",
             loginDescriptionError: "Указаны неверные данные",
             saveLogin: "Сохранить email",
-            loginBtn: "Войти"
+            loginBtn: "Войти",
+            playBtn: "Играть"
 		}),
 		new MLanguage('en').create({
 			discordLogin: "Login with Discord",
             loginDescription: "Or use your Mojang account",
             loginDescriptionError: "Access denied, invalid credentials",
             saveLogin: "Save email for next login",
-            loginBtn: "Login"
+            loginBtn: "Login",
+            playBtn: "Play"
 		})
 	]
 })

@@ -56,8 +56,6 @@ export default {
 	},
 	mounted: async function () {
 		this.uiSetLang(navigator.language)
-		//setting up login window size
-		//ipcRenderer.send('login-window')
 		//on discord/mojang auth set token and check if account whitelisted
 		ipcRenderer.on('discord-oauth-reply', async (event, auth) => {
 			this.setToken(auth)
@@ -67,9 +65,10 @@ export default {
 				discriminator:this.user.user.discriminator
 			})
 		})
-		ipcRenderer.on('user-confirm', (event, profile) => {
+		ipcRenderer.on('user-confirm', async (event, profile) => {
 			if(profile){
-				this.setAccount(profile)
+				await this.setAccount(profile)
+				this.$router.push('Main')
 			} else {
 				this.inProgress = false
 				this.loginError = true
