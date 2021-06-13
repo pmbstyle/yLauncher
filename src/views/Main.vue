@@ -1,21 +1,21 @@
 <template>
 	<div id="mainWrap">
-        <div id="main">
-            <div class="close" @click="close()">
+		<div id="main">
+			<div class="close" @click="close()">
 				<div class="close-wrap">
 					<div class="close-ico"></div>
 				</div>
 			</div>
-            <div class="header">
-                <div class="drag"></div>
-                <div id="user">
-                    <div class="avatar" :style="{ 'background-image': 'url(' + userAvatar + ')' }"></div>
-                </div>
-            </div>
-            <div class="wrapper"></div>
-            <button class="play-btn" @click="!inProgress ? login() : ''">{{$ml.get('playBtn')}}</button>
-            <div class="footer-copyright"><span>yLauncher alpha</span> © 2021 ytyaCraft</div>
-        </div>
+			<div class="header">
+				<div class="drag"></div>
+				<div id="user">
+					<div class="avatar" :style="{ 'background-image': 'url(' + userAvatar + ')' }"></div>
+				</div>
+			</div>
+			<div class="wrapper"></div>
+			<button class="play-btn" @click="!inProgress ? login() : ''">{{$ml.get('playBtn')}}</button>
+			<div class="footer-copyright"><span>yLauncher alpha</span> © 2021 ytyaCraft</div>
+		</div>
 	</div>
 </template>
 
@@ -37,10 +37,10 @@ export default {
 	},
 	computed: {
 		...mapGetters(['preferences','is_logged','user']),
-        userAvatar: function(){
-            let url = `https://cdn.discordapp.com/avatars/${this.user.user.id}/${this.user.user.avatar}.png`
-            return url
-        }
+		userAvatar: function(){
+			let url = `https://cdn.discordapp.com/avatars/${this.user.user.id}/${this.user.user.avatar}.png`
+			return url
+		}
 	},
 	mounted: async function () {
 		this.uiSetLang(navigator.language)
