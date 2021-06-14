@@ -15,7 +15,7 @@
         .header {
             width:100%;
             height:90px;
-            @include flex-row(flex-start, center);
+            @include flex-row(space-between, center);
             background:url(../images/main-header-bg.png) no-repeat center top;
             margin-top: 3px;
             position: relative;
@@ -55,7 +55,7 @@
                 right:20px;
                 width:400px;
                 height:500px;
-                overflow: scroll;
+                overflow-x: hidden;
                 background:rgba(0,0,0,.3);
                 padding:10px;
                 p {
@@ -101,29 +101,84 @@
             }
         }
     }
-    #user {
-        width:96px;
-        height:104px;
-        background:url(../images/user-frame-bg.png) no-repeat 0 0;
-        margin-left:20px;
-        margin-top:50px;
-        .avatar {
-            width:76px;
-            height:76px;
-            position: relative;
-            margin-top: 10px;
-            margin-left: 10px;
-            background-size:cover;
-            background-position: center;
-            &::after {
-                content:'';
+    .userwrap {
+        @include flex-row(flex-start, center);
+        width:25%;
+        #user {
+            width:96px;
+            height:104px;
+            background:url(../images/user-frame-bg.png) no-repeat 0 0;
+            margin-left:20px;
+            margin-top:50px;
+            .avatar {
                 width:76px;
                 height:76px;
-                background:url(../images/user-avatar-overlay.png) no-repeat 0 0;
-                position: absolute;
-                top:0;
-                left:0;
-                z-index:2;
+                position: relative;
+                margin-top: 10px;
+                margin-left: 10px;
+                background-size:cover;
+                background-position: center;
+                &::after {
+                    content:'';
+                    width:76px;
+                    height:76px;
+                    background:url(../images/user-avatar-overlay.png) no-repeat 0 0;
+                    position: absolute;
+                    top:0;
+                    left:0;
+                    z-index:2;
+                }
+            }
+        }
+        .username {
+            color: $light-gold;
+            text-shadow: rgba(0,0,0,.8) 1px 1px;
+            span {
+                text-transform: uppercase;
+                color:$gold-white;
+                font-size: 1.5em; 
+            }
+            div {
+                font-size:1.2em;
+                text-shadow: rgba(0,0,0,.8) 1px 1px;
+                i {
+                    font-style: normal;
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+            }
+        }
+    }
+    .premium {
+        width:25%;
+        margin-right:18px;
+        text-transform: uppercase;
+        color:$gold-white;
+        font-size: 1.5em;
+        @include flex-row(flex-end, center);
+        span {
+            width:30px;
+            height:30px;
+            display:block;
+            &.active {
+                background:url(../images/lightbulb-active.png) no-repeat 0 0;
+            }
+        }
+    }
+    .menu {
+        @include flex-row(center, center);
+        div {
+            margin:0 10px;
+            text-transform: uppercase;
+            color:$light-gold;
+            font-size:1.3em;
+            cursor: pointer;
+            text-shadow: rgba(0,0,0,.8) 1px 1px;
+            transition: all .3s ease-in-out;
+            &.active {
+                color:$gold-white;
+            }
+            &:hover {
+                color:$gold-white;
             }
         }
     }

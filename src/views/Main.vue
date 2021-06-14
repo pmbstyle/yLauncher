@@ -6,12 +6,7 @@
 					<div class="close-ico"></div>
 				</div>
 			</div>
-			<div class="header">
-				<div class="drag"></div>
-				<div id="user">
-					<div class="avatar" :style="{ 'background-image': 'url(' + userAvatar + ')' }"></div>
-				</div>
-			</div>
+			<window-header/>
 			<div class="wrapper">
 				<div class="debug-log" id="debug">
 					<p v-for="(log, index) in client.log" :key="index">
@@ -32,12 +27,14 @@
 
 <script>
 import {ipcRenderer} from 'electron'
+import windowHeader from '../components/header.vue'
 import launch from '../components/lunch.vue'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 export default {
 	name: 'Main',
 	components: {
-		launch
+		launch,
+		windowHeader
 	},
 	data: function(){
 		return {

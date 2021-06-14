@@ -9,7 +9,30 @@ export default ({
 				maxRam:2000
 			},
 			log:[]
-		}
+		},
+		mainmenu: [
+			{
+				id:0,
+				name:'Home',
+				nameRu: 'Главная',
+				view:'Main',
+				is_active:true
+			},
+			{
+				id:1,
+				name:'News',
+				nameRu: 'Новости',
+				view:'News',
+				is_active:false
+			},
+			{
+				id:2,
+				name:'Settings',
+				nameRu: 'Настройки',
+				view:'Settings',
+				is_active:false
+			}
+		]
 	},
 	actions: {
 	},
@@ -34,6 +57,9 @@ export default ({
 		},
 		client(state) {
 			return state.client
+		},
+		mainmenu(state) {
+			return state.mainmenu
 		}
 	}
 })

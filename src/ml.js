@@ -14,7 +14,9 @@ export default new MLCreate({
             saveLogin: "Сохранить email",
             loginBtn: "Войти",
             playBtn: "Играть",
-            playingBtn: "Играем"
+            playingBtn: "Играем",
+            level: "Уровень",
+            premium: "Подписка"
 		}),
 		new MLanguage('en').create({
 			discordLogin: "Login with Discord",
@@ -23,7 +25,9 @@ export default new MLCreate({
             saveLogin: "Save email for next login",
             loginBtn: "Login",
             playBtn: "Play",
-            playingBtn: "Playing"
+            playingBtn: "Playing",
+            level: "Level",
+            premium: "Premium"
 		})
 	]
 })

@@ -50,11 +50,11 @@ export default {
             launcher.launch(opts)
 
             launcher.on('close', () => {
-                this.pushLog({type:'Close', content:'client sent close callback'})
+                this.pushLog({type:'Close', content:'The client sent close callback'})
                 this.inProgress = false
             })
             launcher.on('progress', (e) => this.pushLog({type:'Download Progress', content:e}))
-            launcher.on('data', (e) => this.pushLog({type:'Client Data', content:e.toString('utf-8')}))
+            launcher.on('data', (e) => e.indexOf('[CHAT]') === -1 ? this.pushLog({type:'Client Data', content:e}) : '')
             launcher.on('error', (e) => this.pushLog({type:'Error', content:e.toString('utf-8')}))
 		}
 	}
