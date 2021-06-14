@@ -4,6 +4,10 @@ export default ({
             lang:'en'
         },
 		client:{
+			settings:{
+				minRam:1000,
+				maxRam:2000
+			},
 			log:[]
 		}
 	},
@@ -19,6 +23,9 @@ export default ({
 		},
 		pushLog: function(state,data) {
 			state.client.log.push(data)
+		},
+		clearLog: function(state) {
+			state.client.log = []
 		}
 	},
 	getters:{

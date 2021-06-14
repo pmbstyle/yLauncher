@@ -1,5 +1,11 @@
 <template>
-    <button class="play-btn" @click="!inProgress ? play() : ''">{{$ml.get('playBtn')}}</button>
+    <button
+        class="play-btn"
+        @click="!inProgress ? play() : ''"
+        :disabled="inProgress"
+    >
+    {{playBtnText}}
+    </button>
 </template>
 <script>
 const { Client, Authenticator } = require('minecraft-launcher-core')
@@ -13,12 +19,16 @@ export default {
     },
     computed: {
 		...mapGetters(['client','user']),
+        playBtnText: function() {
+            return !this.inProgress ? this.$ml.get('playBtn') : this.$ml.get('playingBtn')
+        }
 	},
     methods: {
 		...mapActions([]),
-		...mapMutations(['pushLog']),
+		...mapMutations(['pushLog','clearLog']),
 		play: function() {
             this.inProgress = true
+            this.clearLog()
             let opts = {
                 clientPackage: null,
                 authorization: Authenticator.getAuth(this.user.account.minecraftID),
@@ -31,26 +41,21 @@ export default {
                     host:"mc.ytyacraft.ru"
                 },
                 memory: {
-                    max: "2000",
-                    min: "1000"
+                    max: this.client.settings.maxRam,
+                    min: this.client.settings.minRam
                 }
             }
 
             const launcher = new Client()
             launcher.launch(opts)
 
-            // launcher.on('debug', (e) => {
-            //     return new Promise(e => {
-            //         api.on(e => resolve(e))
-            //     })
-            // })
-            // launcher.on('download', (e) => console.log('download: '+e))
-            // launcher.on('download-status', (e) => console.log('download-status: '+e.name+','+e.type+','+e.current+','+e.total))
-            // launcher.on('progress', (e) => console.log('progress: '+e.total))
-            launcher.on('data', (e) => this.pushLog(e.toString('utf-8')))
-            // launcher.on('package-extract', (e) => console.log('package-extract: '+e.toString('utf-8')))
-            // launcher.on('close', (e) => console.log('close: '+e.toString('utf-8')))
-            // launcher.on('error', (e) => console.log(e.toString('utf-8')))
+            launcher.on('close', () => {
+                this.pushLog({type:'Close', content:'client sent close callback'})
+                this.inProgress = false
+            })
+            launcher.on('progress', (e) => this.pushLog({type:'Download Progress', content:e}))
+            launcher.on('data', (e) => this.pushLog({type:'Client Data', content:e.toString('utf-8')}))
+            launcher.on('error', (e) => this.pushLog({type:'Error', content:e.toString('utf-8')}))
 		}
 	}
 }

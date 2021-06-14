@@ -13,7 +13,8 @@ export default new MLCreate({
             loginDescriptionError: "Указаны неверные данные",
             saveLogin: "Сохранить email",
             loginBtn: "Войти",
-            playBtn: "Играть"
+            playBtn: "Играть",
+            playingBtn: "Играем"
 		}),
 		new MLanguage('en').create({
 			discordLogin: "Login with Discord",
@@ -21,7 +22,8 @@ export default new MLCreate({
             loginDescriptionError: "Access denied, invalid credentials",
             saveLogin: "Save email for next login",
             loginBtn: "Login",
-            playBtn: "Play"
+            playBtn: "Play",
+            playingBtn: "Playing"
 		})
 	]
 })

@@ -49,6 +49,26 @@
                 background:url(../images/main-wrapper-bg.jpg) no-repeat center center;
                 background-size:cover;
             }
+            .debug-log {
+                position: absolute;
+                bottom:20px;
+                right:20px;
+                width:400px;
+                height:500px;
+                overflow: scroll;
+                background:rgba(0,0,0,.3);
+                padding:10px;
+                p {
+                    color:$gold-white;
+                    font-size:0.857em;
+                    strong.error {
+                        color:$normal-red
+                    }
+                    strong.download {
+                        color:$light-gold
+                    }
+                }
+            }
         }
         .play-btn {
             width:276px;

@@ -12,7 +12,18 @@
 					<div class="avatar" :style="{ 'background-image': 'url(' + userAvatar + ')' }"></div>
 				</div>
 			</div>
-			<div class="wrapper"></div>
+			<div class="wrapper">
+				<div class="debug-log" id="debug">
+					<p v-for="(log, index) in client.log" :key="index">
+						<strong :class="{
+							error:log.type === 'Error',
+							download:log.type === 'Download Progress',
+							client:log.type === 'Client Data'
+						}">{{log.type}}:</strong>
+						{{log.content}}
+					</p>
+				</div>
+			</div>
 			<launch/>
 			<div class="footer-copyright"><span>yLauncher alpha</span> © 2021 ytyaCraft</div>
 		</div>
@@ -38,10 +49,15 @@ export default {
 		'preferences.lang': function(){
 			this.$ml.change(this.preferences.lang)
 			this.$forceUpdate()
+		},
+		//stick debug log content to the bottom
+		'client.log': function() {
+			var elem = document.getElementById('debug');
+			elem.scrollTop = elem.scrollHeight;
 		}
 	},
 	computed: {
-		...mapGetters(['preferences','is_logged','user']),
+		...mapGetters(['client','preferences','is_logged','user']),
 		userAvatar: function(){
 			let url = `https://cdn.discordapp.com/avatars/${this.user.user.id}/${this.user.user.avatar}.png`
 			return url
