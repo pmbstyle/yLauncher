@@ -13,7 +13,7 @@
 				</div>
 			</div>
 			<div class="wrapper"></div>
-			<button class="play-btn" @click="!inProgress ? login() : ''">{{$ml.get('playBtn')}}</button>
+			<launch/>
 			<div class="footer-copyright"><span>yLauncher alpha</span> © 2021 ytyaCraft</div>
 		</div>
 	</div>
@@ -21,12 +21,17 @@
 
 <script>
 import {ipcRenderer} from 'electron'
+import launch from '../components/lunch.vue'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 export default {
 	name: 'Main',
+	components: {
+		launch
+	},
 	data: function(){
 		return {
-			inProgress:false
+			inProgress:false,
+			log:[]
 		}
 	},
 	watch: {
