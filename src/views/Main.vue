@@ -8,19 +8,10 @@
 			</div>
 			<window-header/>
 			<div class="wrapper">
-				<div class="debug-log" id="debug">
-					<p v-for="(log, index) in client.log" :key="index">
-						<strong :class="{
-							error:log.type === 'Error',
-							download:log.type === 'Download Progress',
-							client:log.type === 'Client Data'
-						}">{{log.type}}:</strong>
-						{{log.content}}
-					</p>
-				</div>
+				<debug/>
 			</div>
 			<launch/>
-			<div class="footer-copyright"><span>yLauncher alpha</span> © 2021 ytyaCraft</div>
+			<div class="footer-copyright"><span>yLauncher alpha (Work in progress)</span> © 2021 ytyaCraft</div>
 		</div>
 	</div>
 </template>
@@ -29,12 +20,14 @@
 import {ipcRenderer} from 'electron'
 import windowHeader from '../components/header.vue'
 import launch from '../components/lunch.vue'
+import debug from '../components/debug.vue'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 export default {
 	name: 'Main',
 	components: {
 		launch,
-		windowHeader
+		windowHeader,
+		debug
 	},
 	data: function(){
 		return {
@@ -46,11 +39,6 @@ export default {
 		'preferences.lang': function(){
 			this.$ml.change(this.preferences.lang)
 			this.$forceUpdate()
-		},
-		//stick debug log content to the bottom
-		'client.log': function() {
-			var elem = document.getElementById('debug');
-			elem.scrollTop = elem.scrollHeight;
 		}
 	},
 	computed: {

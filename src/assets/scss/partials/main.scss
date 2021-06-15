@@ -55,18 +55,53 @@
                 right:20px;
                 width:400px;
                 height:500px;
-                overflow-x: hidden;
-                background:rgba(0,0,0,.3);
-                padding:10px;
+                border:$light-gold 1px solid;
+                padding-top:7px;
+                @include flex-column(flex-start,flex-start);
+                .wrapper {
+                    width:calc(100% - 20px);
+                    padding:10px;
+                    flex:1;
+                    background:rgba(0,0,0,.8);
+                }
                 p {
                     color:$gold-white;
                     font-size:0.857em;
+                    strong {
+                        font-weight: 400;
+                    }
                     strong.error {
                         color:$normal-red
                     }
                     strong.download {
                         color:$light-gold
                     }
+                }
+                .debug-tabs {
+                    @include flex-row(space-evenly,center);
+                    width:100%;
+                    background:rgba(255,255,255,.05);
+                    border-top:$light-gold 1px solid;
+                    div {
+                        padding:5px 10px;
+                        margin-right:1px;
+                        background:rgba(0,0,0,.3);
+                        color:$light-gold;
+                        cursor:pointer;
+                        flex:1;
+                        text-align:center;
+                        &.active {
+                            color:$gold-white;
+                            background:rgba(250, 187, 104, 0.3);
+                        }
+                        &:hover {
+                            color:$gold-white;
+                        }
+                        &:last-child {
+                            margin-right:0;
+                        }
+                    }
+                    
                 }
             }
         }

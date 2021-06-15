@@ -45,7 +45,7 @@ export default ({
             }
 		},
 		pushLog: function(state,data) {
-			state.client.log.push(data)
+			state.client.log.push({type:data.type,content:data.content})
 		},
 		clearLog: function(state) {
 			state.client.log = []

@@ -37,6 +37,7 @@ export default {
                     number: "1.16.5",
                     type: "release",
                 },
+                forge: './forge/forge-1.16.5-36.1.31-installer.jar',
                 server:{
                     host:"mc.ytyacraft.ru"
                 },
@@ -50,12 +51,12 @@ export default {
             launcher.launch(opts)
 
             launcher.on('close', () => {
-                this.pushLog({type:'Close', content:'The client sent close callback'})
+                this.pushLog({type:'client', content:'The client sent close callback'})
                 this.inProgress = false
             })
-            launcher.on('progress', (e) => this.pushLog({type:'Download Progress', content:e}))
-            launcher.on('data', (e) => e.indexOf('[CHAT]') === -1 ? this.pushLog({type:'Client Data', content:e}) : '')
-            launcher.on('error', (e) => this.pushLog({type:'Error', content:e.toString('utf-8')}))
+            launcher.on('progress', (e) => this.pushLog({type:'download', content:e}))
+            launcher.on('data', (e) => e.indexOf('[CHAT]') === -1 ? this.pushLog({type:'client', content:e}) : '')
+            launcher.on('error', (e) => this.pushLog({type:'error', content:e.toString('utf-8')}))
 		}
 	}
 }
