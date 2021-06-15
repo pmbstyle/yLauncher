@@ -4,7 +4,7 @@
 			<p v-for="(log, index) in activeLog" :key="index">
 				<strong :class="{
 					error:log.type === 'error',
-					download:log.type === 'donwload',
+					download:log.type === 'download',
 					client:log.type === 'client'
 				}">{{log.type}}:</strong>
 				{{log.content}}
