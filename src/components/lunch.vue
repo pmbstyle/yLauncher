@@ -1,7 +1,8 @@
 <template>
     <button
         class="play-btn"
-        @click="!inProgress ? play() : ''"
+        :class="uiStatus.playButton"
+        @click="uiStatus.playButton == 'play' ? play() : ''"
         :disabled="inProgress"
     >
     {{playBtnText}}
@@ -18,16 +19,24 @@ export default {
         }
     },
     computed: {
-		...mapGetters(['client','user']),
+		...mapGetters(['client','user', 'uiStatus']),
         playBtnText: function() {
-            return !this.inProgress ? this.$ml.get('playBtn') : this.$ml.get('playingBtn')
-        }
+            switch (this.uiStatus.playButton) {
+                case 'play':
+                    return this.$ml.get('playBtn')
+                case 'playing':
+                    return this.$ml.get('playingBtn')
+                case 'launching':
+                    return this.$ml.get('launchingBtn')
+                default:
+                    return this.$ml.get('playBtn')
+            }
+        },
 	},
     methods: {
 		...mapActions([]),
-		...mapMutations(['pushLog','clearLog']),
+		...mapMutations(['pushLog','clearLog', 'playBtnStatus']),
 		play: function() {
-            this.inProgress = true
             this.clearLog()
             let opts = {
                 clientPackage: null,
@@ -52,10 +61,16 @@ export default {
 
             launcher.on('close', () => {
                 this.pushLog({type:'client', content:'The client sent close callback'})
-                this.inProgress = false
+                this.playBtnStatus('play')
             })
-            launcher.on('progress', (e) => this.pushLog({type:'download', content:e}))
-            launcher.on('data', (e) => e.indexOf('[CHAT]') === -1 ? this.pushLog({type:'client', content:e}) : '')
+            launcher.on('progress', (e) => {
+                this.pushLog({type:'download', content:e})
+                this.playBtnStatus('launching')
+            })
+            launcher.on('data', (e) => {
+                e.indexOf('[CHAT]') === -1 ? this.pushLog({type:'client', content:e}) : ''
+                this.playBtnStatus('playing')
+            })
             launcher.on('error', (e) => this.pushLog({type:'error', content:e.toString('utf-8')}))
 		}
 	}

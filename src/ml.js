@@ -15,6 +15,7 @@ export default new MLCreate({
             loginBtn: "Войти",
             playBtn: "Играть",
             playingBtn: "Играем",
+            launchingBtn: "Запускаем",
             level: "Уровень",
             premium: "Подписка"
 		}),
@@ -26,6 +27,7 @@ export default new MLCreate({
             loginBtn: "Login",
             playBtn: "Play",
             playingBtn: "Playing",
+            launchingBtn: "Launching",
             level: "Level",
             premium: "Premium"
 		})

@@ -32,7 +32,10 @@ export default ({
 				view:'Settings',
 				is_active:false
 			}
-		]
+		],
+		uiStatus: {
+			playButton:'play'
+		}
 	},
 	actions: {
 	},
@@ -49,6 +52,9 @@ export default ({
 		},
 		clearLog: function(state) {
 			state.client.log = []
+		},
+		playBtnStatus: function(state,status) {
+			state.uiStatus.playButton = status
 		}
 	},
 	getters:{
@@ -60,6 +66,9 @@ export default ({
 		},
 		mainmenu(state) {
 			return state.mainmenu
+		},
+		uiStatus(state) {
+			return state.uiStatus
 		}
 	}
 })

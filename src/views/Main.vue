@@ -18,7 +18,7 @@
 
 <script>
 import {ipcRenderer} from 'electron'
-import windowHeader from '../components/header.vue'
+import windowHeader from '../components/appheader.vue'
 import launch from '../components/lunch.vue'
 import debug from '../components/debug.vue'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
