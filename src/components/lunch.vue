@@ -35,7 +35,7 @@ export default {
 	},
     methods: {
 		...mapActions([]),
-		...mapMutations(['pushLog','clearLog', 'playBtnStatus']),
+		...mapMutations(['pushLog','clearLog', 'playBtnStatus','debugStatus']),
 		play: function() {
             this.clearLog()
             let opts = {
@@ -62,10 +62,12 @@ export default {
             launcher.on('close', () => {
                 this.pushLog({type:'client', content:'The client sent close callback'})
                 this.playBtnStatus('play')
+                this.debugStatus(false)
             })
             launcher.on('progress', (e) => {
                 this.pushLog({type:'download', content:e})
                 this.playBtnStatus('launching')
+                this.debugStatus(true)
             })
             launcher.on('data', (e) => {
                 e.indexOf('[CHAT]') === -1 ? this.pushLog({type:'client', content:e}) : ''

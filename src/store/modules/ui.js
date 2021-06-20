@@ -1,7 +1,8 @@
 export default ({
 	state: {
 		preferences:{
-            lang:'en'
+            lang:'en',
+			debug: true
         },
 		client:{
 			settings:{
@@ -34,7 +35,8 @@ export default ({
 			}
 		],
 		uiStatus: {
-			playButton:'play'
+			playButton:'play',
+			showDebug: false
 		}
 	},
 	actions: {
@@ -55,6 +57,9 @@ export default ({
 		},
 		playBtnStatus: function(state,status) {
 			state.uiStatus.playButton = status
+		},
+		debugStatus: function(state,status) {
+			state.uiStatus.showDebug = status
 		}
 	},
 	getters:{

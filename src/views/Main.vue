@@ -8,7 +8,7 @@
 			</div>
 			<window-header/>
 			<div class="wrapper">
-				<debug/>
+				<debug v-if="preferences.debug && uiStatus.showDebug"/>
 			</div>
 			<launch/>
 			<div class="footer-copyright"><span>yLauncher alpha (Work in progress)</span> © 2021 ytyaCraft</div>
@@ -42,7 +42,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters(['client','preferences','is_logged','user']),
+		...mapGetters(['client','preferences','is_logged','user','uiStatus']),
 		userAvatar: function(){
 			let url = `https://cdn.discordapp.com/avatars/${this.user.user.id}/${this.user.user.avatar}.png`
 			return url
