@@ -19,17 +19,17 @@ export default {
         }
     },
     computed: {
-		...mapGetters(['client','user', 'uiStatus']),
+		...mapGetters(['client','user', 'uiStatus', 'preferences']),
         playBtnText: function() {
             switch (this.uiStatus.playButton) {
                 case 'play':
-                    return this.$ml.get('playBtn')
+                    return this.preferences.lang == 'en' ? 'Play' : 'Играть'
                 case 'playing':
-                    return this.$ml.get('playingBtn')
+                    return this.preferences.lang == 'en' ? 'Playing' : 'Играем'
                 case 'launching':
-                    return this.$ml.get('launchingBtn')
+                    return this.preferences.lang == 'en' ? 'Launching' : 'Запускаем'
                 default:
-                    return this.$ml.get('playBtn')
+                    return this.preferences.lang == 'en' ? 'Play' : 'Играть'
             }
         },
 	},

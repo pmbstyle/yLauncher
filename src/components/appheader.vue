@@ -7,7 +7,7 @@
 			</div>
 			<div class="username">
 				<span>{{user.account.minecraftID}}</span>
-				<div class="userlvl">{{$ml.get('level')}} <i>80</i></div>
+				<div class="userlvl">{{$ml.get('level')}} <i>1</i></div>
 			</div>
 		</div>
 		<div class="menu">
@@ -18,7 +18,7 @@
 			:key="item.id"
 			@click="mainMenuUpdate(item.id)"
 			>
-				{{preferences.land == 'en' ? item.name : item.nameRu}}
+				{{menuLang(item.name,item.nameRu)}}
 			</div>
 		</div>
 		<div class="premium">
@@ -37,6 +37,11 @@ export default {
 			premium:true
 		}
 	},
+	watch: {
+		'preferences.lang': function(){
+			this.$forceUpdate()
+		}
+	},
 	computed: {
 		...mapGetters(['user','mainmenu','preferences']),
 		userAvatar: function(){
@@ -47,7 +52,9 @@ export default {
 	methods: {
 		...mapActions([]),
 		...mapMutations(['mainMenuUpdate']),
-		
+		menuLang: function(en,ru) {
+			return this.preferences.lang == 'en' ? en : ru
+		}
 	}
 }
 </script>

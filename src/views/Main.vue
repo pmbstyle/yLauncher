@@ -8,7 +8,7 @@
 			</div>
 			<window-header/>
 			<div class="wrapper">
-				<debug v-if="preferences.debug && uiStatus.showDebug"/>
+				<debug v-if="preferences.debug != 'false' && uiStatus.showDebug"/>
 				<settings v-if="mainmenu[2].is_active"/>
 			</div>
 			<launch/>

@@ -68,6 +68,9 @@ export default ({
 		},
 		saveClientSettings: function(state,data) {
 			state.client.settings = data
+		},
+		savePreferences: function(state, data) {
+			state.preferences = data
 		}
 	},
 	getters:{

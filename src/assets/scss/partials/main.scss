@@ -31,7 +31,7 @@
                 -webkit-app-region: drag;
             }
         }
-        .wrapper {
+        & > .wrapper {
             width: calc(100% - 25px);
             height: calc(100% - 128px);
             position: relative;
@@ -56,7 +56,8 @@
                 width:400px;
                 height:500px;
                 border:$light-gold 1px solid;
-                padding-top:7px;
+                //padding-top:7px;
+                z-index:5;
                 @include flex-column(flex-start,flex-start);
                 .wrapper {
                     width:calc(100% - 20px);

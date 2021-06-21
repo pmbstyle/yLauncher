@@ -17,7 +17,16 @@ export default new MLCreate({
             playingBtn: "Играем",
             launchingBtn: "Запускаем",
             level: "Уровень",
-            premium: "Подписка"
+            premium: "Подписка",
+            minRam: "Мин. памяти",
+            maxRam: "Макс. памяти",
+            debugSetting: "Лог лаунчера",
+            language: "Язык",
+            russian: "Русский",
+            english: "Английский",
+            on: "Включено",
+            off: "Выключено",
+            save: "Сохранить"
 		}),
 		new MLanguage('en').create({
 			discordLogin: "Login with Discord",
@@ -29,7 +38,16 @@ export default new MLCreate({
             playingBtn: "Playing",
             launchingBtn: "Launching",
             level: "Level",
-            premium: "Premium"
+            premium: "Premium",
+            minRam: "Min RAM",
+            maxRam: "Max RAM",
+            debugSetting: "Debuger",
+            language: "Language",
+            russian: "Russian",
+            english: "English",
+            on: "On",
+            off: "Off",
+            save: "Save"
 		})
 	]
 })
