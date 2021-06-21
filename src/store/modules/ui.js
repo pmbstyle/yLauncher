@@ -21,9 +21,9 @@ export default ({
 			},
 			{
 				id:1,
-				name:'News',
-				nameRu: 'Новости',
-				view:'News',
+				name:'Game Wiki',
+				nameRu: 'База знаний',
+				view:'Wiki',
 				is_active:false
 			},
 			{
@@ -60,6 +60,14 @@ export default ({
 		},
 		debugStatus: function(state,status) {
 			state.uiStatus.showDebug = status
+		},
+		mainMenuUpdate: function(state,id) {
+			state.mainmenu.forEach(menu => {
+				menu.is_active = menu.id == id ? true : false
+			})
+		},
+		saveClientSettings: function(state,data) {
+			state.client.settings = data
 		}
 	},
 	getters:{

@@ -11,7 +11,15 @@
 			</div>
 		</div>
 		<div class="menu">
-			<div class="menu-item" :class="{active:item.is_active}" v-for="item in mainmenu" :key="item.id">{{preferences.land == 'en' ? item.name : item.nameRu}}</div>
+			<div
+			class="menu-item"
+			:class="{active:item.is_active}"
+			v-for="item in mainmenu"
+			:key="item.id"
+			@click="mainMenuUpdate(item.id)"
+			>
+				{{preferences.land == 'en' ? item.name : item.nameRu}}
+			</div>
 		</div>
 		<div class="premium">
 			{{$ml.get('premium')}}
@@ -38,7 +46,7 @@ export default {
 	},
 	methods: {
 		...mapActions([]),
-		...mapMutations([]),
+		...mapMutations(['mainMenuUpdate']),
 		
 	}
 }

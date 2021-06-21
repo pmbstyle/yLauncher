@@ -1,0 +1,22 @@
+#settings {
+    padding:80px 20px;
+    background:rgba(0,0,0,.5);
+    position: absolute;
+    width:calc(100% - 40px);
+    height:calc(100% - 160px);
+    left:0;
+    top:0;
+    .settings-input {
+        @include flex-row(flex-start,center);
+        padding-bottom:30px;
+        max-width:500px;
+        label {
+            color:$text-color;
+            padding-right: 20px;
+            font-size:1.2em;
+        }
+        .vue-range-slider {
+            flex:1;
+        }
+    }
+}

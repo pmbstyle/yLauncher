@@ -9,6 +9,7 @@
 			<window-header/>
 			<div class="wrapper">
 				<debug v-if="preferences.debug && uiStatus.showDebug"/>
+				<settings v-if="mainmenu[2].is_active"/>
 			</div>
 			<launch/>
 			<div class="footer-copyright"><span>yLauncher alpha (Work in progress)</span> © 2021 ytyaCraft</div>
@@ -21,13 +22,15 @@ import {ipcRenderer} from 'electron'
 import windowHeader from '../components/appheader.vue'
 import launch from '../components/lunch.vue'
 import debug from '../components/debug.vue'
+import settings from '../components/settings.vue'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 export default {
 	name: 'Main',
 	components: {
 		launch,
 		windowHeader,
-		debug
+		debug,
+		settings
 	},
 	data: function(){
 		return {
@@ -42,7 +45,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters(['client','preferences','is_logged','user','uiStatus']),
+		...mapGetters(['mainmenu','client','preferences','is_logged','user','uiStatus']),
 		userAvatar: function(){
 			let url = `https://cdn.discordapp.com/avatars/${this.user.user.id}/${this.user.user.avatar}.png`
 			return url
