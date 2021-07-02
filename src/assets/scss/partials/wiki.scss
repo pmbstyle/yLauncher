@@ -1,0 +1,19 @@
+#wiki {
+    padding:40px 14px 60px 14px;
+    background:rgba(0,0,0,.5);
+    position: absolute;
+    width:calc(100% - 28px);
+    height:calc(100% - 100px);
+    left:0;
+    top:0;
+    & > .wrapper {
+        width:calc(100% - 40px);
+        height:calc(100% - 40px);
+        padding:20px;
+        background:$darker-bg;
+        border:$border-color 1px solid;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 20px;
+    }
+}

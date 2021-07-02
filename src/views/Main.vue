@@ -10,6 +10,7 @@
 			<div class="wrapper">
 				<debug v-if="preferences.debug != 'false' && uiStatus.showDebug"/>
 				<settings v-if="mainmenu[2].is_active"/>
+				<wiki v-if="mainmenu[1].is_active"/>
 			</div>
 			<launch/>
 			<div class="footer-copyright"><span>yLauncher alpha (Work in progress)</span> © 2021 ytyaCraft</div>
@@ -23,6 +24,7 @@ import windowHeader from '../components/appheader.vue'
 import launch from '../components/lunch.vue'
 import debug from '../components/debug.vue'
 import settings from '../components/settings.vue'
+import wiki from '../components/wiki.vue'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 export default {
 	name: 'Main',
@@ -30,7 +32,8 @@ export default {
 		launch,
 		windowHeader,
 		debug,
-		settings
+		settings,
+		wiki
 	},
 	data: function(){
 		return {
