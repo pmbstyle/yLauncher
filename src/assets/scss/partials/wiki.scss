@@ -15,5 +15,21 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         column-gap: 20px;
+        color:$text-color;
+    }
+}
+.wiki-title {
+    font-size:1.5em;
+    color:$gold-white;
+}
+.wiki-content-list {
+    p {
+        font-size:1.3em;
+        color:$gold-white;
+        cursor:pointer;
+        width:max-content;
+        &:hover {
+            text-decoration:underline;
+        }
     }
 }

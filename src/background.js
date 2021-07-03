@@ -110,10 +110,10 @@ async function createWindow() {
       })
   })
   //Checking if user has been approved to join in Discord
-  ipcMain.on('check-discord-account', async (event, arg) => {
+  ipcMain.on('check-discord-account', async (event, id) => {
       let profileData
       try {
-          profileData = await profileModel.findOne({discordID: arg.username+'#'+arg.discriminator})
+          profileData = await profileModel.findOne({discord_user_id: id})
           event.sender.send('user-confirm', {discordID:profileData.discordID,minecraftID:profileData.minecraftID});
       } catch (err) {
           console.log(err)

@@ -26,7 +26,8 @@ export default new MLCreate({
             english: "Английский",
             on: "Включено",
             off: "Выключено",
-            save: "Сохранить"
+            save: "Сохранить",
+            categories: "Категории"
 		}),
 		new MLanguage('en').create({
 			discordLogin: "Login with Discord",
@@ -47,7 +48,8 @@ export default new MLCreate({
             english: "English",
             on: "On",
             off: "Off",
-            save: "Save"
+            save: "Save",
+            categories: "Categories"
 		})
 	]
 })

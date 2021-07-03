@@ -60,10 +60,7 @@ export default {
 		ipcRenderer.on('discord-oauth-reply', async (event, auth) => {
 			this.setToken(auth)
 			await this.getDiscordUser()
-			ipcRenderer.send('check-discord-account', {
-				username:this.user.user.username,
-				discriminator:this.user.user.discriminator
-			})
+			ipcRenderer.send('check-discord-account', this.user.user.id)
 		})
 		ipcRenderer.on('user-confirm', async (event, profile) => {
 			if(profile){

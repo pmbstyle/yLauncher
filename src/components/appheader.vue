@@ -30,7 +30,7 @@
 <script>
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 export default {
-	name:'header',
+	name:'appheader',
 	data: function() {
 		return {
 			inProgress:false,
