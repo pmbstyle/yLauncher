@@ -7,20 +7,37 @@
     left:0;
     top:0;
     & > .wrapper {
-        width:calc(100% - 40px);
-        height:calc(100% - 40px);
-        padding:20px;
+        height:100%;
+        padding:0px;
         background:$darker-bg;
         border:$border-color 1px solid;
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 3fr;
         column-gap: 20px;
         color:$text-color;
+        & > .left {
+            background:url(../images/wiki-left-bg.png) no-repeat center top;
+            border-right:$border-color 1px solid;
+            .content {
+                padding:0 20px;
+            }
+        }
+        & > .right {
+            height:100%;
+        }
     }
 }
 .wiki-title {
-    font-size:1.5em;
     color:$gold-white;
+    font-size: 2em;
+    position: relative;
+    user-select:none;
+    height:69px;
+    background:url(../images/login-header.png) no-repeat center -8px;
+    @include flex-row(center,flex-start);
+    span {
+        padding-top:10px;
+    }
 }
 .wiki-content-list {
     p {
@@ -30,6 +47,21 @@
         width:max-content;
         &:hover {
             text-decoration:underline;
+        }
+        &.active {
+            text-decoration: underline;
+        }
+    }
+}
+.wiki-post {
+    pre {
+        white-space: pre-wrap;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        padding: 5px 10px;
+        &.ql-syntax {
+            background-color: #23241f;
+            color: #f8f8f2;
         }
     }
 }

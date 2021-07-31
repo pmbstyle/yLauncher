@@ -49,7 +49,7 @@ export default new MLCreate({
             on: "On",
             off: "Off",
             save: "Save",
-            categories: "Categories"
+            categories: "Wiki Categories"
 		})
 	]
 })
