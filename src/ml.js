@@ -30,7 +30,7 @@ export default new MLCreate({
             categories: "Категории"
 		}),
 		new MLanguage('en').create({
-            microsoftLogin: "Login with Microsoft",
+            microsoftLogin: "Sign In with Microsoft",
             loginDescription: "Or use your Mojang account",
             loginDescriptionError: "Access denied, invalid credentials",
             saveLogin: "Save email for next login",
