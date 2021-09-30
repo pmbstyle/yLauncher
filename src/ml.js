@@ -8,7 +8,7 @@ export default new MLCreate({
 	save: process.env.NODE_ENV === 'production',
 	languages: [
 		new MLanguage('ru').create({
-			discordLogin: "Логин через Discord",
+			microsoftLogin: "Логин через Microsoft",
             loginDescription: "Либо при помощи аккаунта Mojang",
             loginDescriptionError: "Указаны неверные данные",
             saveLogin: "Сохранить email",
@@ -30,7 +30,7 @@ export default new MLCreate({
             categories: "Категории"
 		}),
 		new MLanguage('en').create({
-			discordLogin: "Login with Discord",
+            microsoftLogin: "Login with Microsoft",
             loginDescription: "Or use your Mojang account",
             loginDescriptionError: "Access denied, invalid credentials",
             saveLogin: "Save email for next login",

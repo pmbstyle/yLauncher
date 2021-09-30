@@ -6,7 +6,7 @@
 				<div class="avatar" :style="{ 'background-image': 'url(' + userAvatar + ')' }"></div>
 			</div>
 			<div class="username">
-				<span>{{user.account.minecraftID}}</span>
+				<span>{{user.user.name}}</span>
 				<div class="userlvl">{{$ml.get('level')}} <i>1</i></div>
 			</div>
 		</div>
@@ -45,8 +45,8 @@ export default {
 	computed: {
 		...mapGetters(['user','mainmenu','preferences']),
 		userAvatar: function(){
-			let url = `https://cdn.discordapp.com/avatars/${this.user.user.id}/${this.user.user.avatar}.png`
-			return url
+			//let url = `https://cdn.discordapp.com/avatars/${this.user.user.id}/${this.user.user.avatar}.png`
+			return ''
 		}
 	},
 	methods: {

@@ -7,9 +7,9 @@
 				</div>
 			</div>
 			<div class="header">yLauncher<span>α</span></div>
-			<div class="discord-auth" @click="loginDiscord()">
+			<div class="discord-auth" @click="microsoftLogin()">
 				<div class="discord-ico"></div>
-				<div class="discord-title">{{$ml.get('discordLogin')}}</div>
+				<div class="discord-title">{{$ml.get('microsoftLogin')}}</div>
 			</div>
 			<div class="description" :class="{error:loginError}">{{descriptionMsg}}</div>
 			<div class="form">
@@ -28,6 +28,7 @@
 <script>
 import {ipcRenderer} from 'electron'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
+import Microsoft from '../services/microsoft'
 export default {
 	name: 'Login',
 	data: function(){
@@ -74,7 +75,7 @@ export default {
 	},
 	methods: {
 		...mapActions(['getDiscordUser']),
-		...mapMutations(['uiSetLang','setToken','setAccount']),
+		...mapMutations(['uiSetLang','setUser','setToken','setAccount']),
 		//mojan login
 		login: async function() {
 			this.inProgress = true
@@ -102,6 +103,49 @@ export default {
 		},
 		close: function() {
 			ipcRenderer.send('window-close')
+		},
+		microsoftLogin: function() {
+			var client_id = '92425d35-b7ea-4608-b193-abf85dcfb95d'
+			var redirect_uri = 'http://127.0.0.1:25555'
+			var scopes = encodeURIComponent('XboxLive.signin offline_access')
+			ipcRenderer.send(
+				'startMicrosoftAuth',
+				`https://login.live.com/oauth20_authorize.srf?client_id=${client_id}&response_type=code&redirect_uri=${redirect_uri}&scope=${scopes}`
+			)
+			ipcRenderer.once('microsoftAuthSuccess', async (_event, code) => {
+				try {
+					const result = await Microsoft.authFromCode(code)
+					if (result.errorCode !== undefined) {
+						switch (result.errorCode) {
+							case 'notOwnMinecraft':
+								throw new Error(result.error)
+
+							default:
+								throw new Error(result.error)
+						}
+					} else {
+						this.setUser({
+							name:result.name,
+							uuid:result.uuid,
+							type:'microsoft'
+						})
+						this.setToken({
+							token:result.token,
+							refresh_token:result.refreshToken
+						})
+						this.$router.push('Main')
+					}
+				} catch (error) {
+					console.log(error)
+					this.inProgress = false
+					this.loginError = true
+				}
+			})
+			ipcRenderer.once('microsoftAuthCancelled', () => {
+				console.log('login canceled')
+				this.inProgress = false
+				this.loginError = true
+			})
 		}
 	}
 }

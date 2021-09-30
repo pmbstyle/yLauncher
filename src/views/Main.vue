@@ -48,11 +48,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters(['mainmenu','client','preferences','is_logged','user','uiStatus']),
-		userAvatar: function(){
-			let url = `https://cdn.discordapp.com/avatars/${this.user.user.id}/${this.user.user.avatar}.png`
-			return url
-		}
+		...mapGetters(['mainmenu','client','preferences','is_logged','user','uiStatus'])
 	},
 	mounted: async function () {
 		this.uiSetLang(navigator.language)
