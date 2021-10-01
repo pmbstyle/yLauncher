@@ -200,7 +200,6 @@ function createMsAuthWindow(url) {
     throw new Error('Microsoft Auth Window Already Created')
   }
   msAuthWindow = new BrowserWindow({
-    //icon: getPlatformIcon('SealCircle'),
     width: 650,
     height: 800,
     webPreferences: {
@@ -215,7 +214,7 @@ function createMsAuthWindow(url) {
 
   msAuthWindow.loadURL(url)
 
-  msAuthWindow.maximize()
+  //msAuthWindow.maximize()
 
   msAuthWindow.removeMenu()
 
@@ -240,6 +239,8 @@ function startMicrosoftAuthServer(event) {
     let requestURL = new URL(req.url, `http://127.0.0.1:${PORT}`)
     let error = requestURL.searchParams.get('error')
     let errorDescription = requestURL.searchParams.get('error_description')
+    console.log(error)
+    console.log(errorDescription)
     if (error !== null) {
       switch (error) {
         case 'access_denied':

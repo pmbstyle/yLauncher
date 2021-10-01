@@ -1,8 +1,8 @@
 const axios = require('axios').default
 const querystring = require('querystring')
 
-const client_id = '92425d35-b7ea-4608-b193-abf85dcfb95d'
-const redirect_uri = 'http://127.0.0.1:25555'
+const client_id = process.env.VUE_APP_AZURE_CLIENT_ID
+const redirect_uri = process.env.VUE_APP_MICROSOFT_REDIRECT
 
 /**
  * Get Minecraft Profile Info from Microsoft Authentication Code

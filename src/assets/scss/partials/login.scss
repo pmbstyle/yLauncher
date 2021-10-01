@@ -33,7 +33,6 @@
             color:$gold-white;
             font-size: 2em;
             margin-top: 10px;
-            padding-bottom: 10px;
             position: relative;
             user-select:none;
             -webkit-app-region: drag;
@@ -46,34 +45,25 @@
                 font-style: italic;
             }
         }
-        .discord-auth {
+        .logo_holder {
             @include flex-row(center,center);
-            cursor: pointer;
-            width:max-content;
-            margin:0 auto;
-            .discord-ico {
-                width:80px;
-                height:80px;
-                background:url(../images/microsoft_ico.png) no-repeat 0 0;
-                background-size: contain;
-                opacity: .8;
-            }
-            .discord-title {
-                padding-left:15px;
-                color:$text-color;
-                font-size:1.2em;
-            }
-            &:hover {
-                .discord-ico {
-                    opacity: 1;
-                }
-                .discord-title {
-                    color:$gold-white;
-                }
+            background:url(../images/main-wrapper-bg.jpg) no-repeat center;
+            background-size: cover;
+            width:calc(100%-18px);
+            height:270px;
+            margin:0 9px;
+            .logo {
+                width:480px;
+                height:200px;
+                background:url(../images/logo-sm-on-black.png) no-repeat center;
+                background-size: cover;
             }
         }
         .description {
-            padding:20px 0 10px 0;
+            @include flex-row(center,center);
+            width:calc(100% - 60px);
+            height:100px;
+            padding:0 30px;
             color:$text-color;
             text-align:center;
             font-size:1.2em;
@@ -100,11 +90,19 @@
                 cursor: pointer;
                 color:$gold-white;
                 text-shadow: rgba(0,0,0,.3) 1px 0px 3px;
-                font-size:2em;
+                font-size:1em;
                 text-transform: uppercase;
                 font-weight: 600;
+                @include flex-row(center,center);
                 &:hover {
                     background:url(../images/green-btn-hover.png) no-repeat 0 0;
+                }
+                span {
+                    width:20px;
+                    height:20px;
+                    background:#fff url(../images/microsoft_ico.png) no-repeat 0 0;
+                    background-size: contain;
+                    margin-right:10px;
                 }
             }
         }

@@ -7,19 +7,23 @@
 				</div>
 			</div>
 			<div class="header">yLauncher<span>α</span></div>
-			<div class="discord-auth" @click="microsoftLogin()">
-				<div class="discord-ico"></div>
-				<div class="discord-title">{{$ml.get('microsoftLogin')}}</div>
+			<div class="logo_holder">
+				<div class="logo"></div>
 			</div>
-			<div class="description" :class="{error:loginError}">{{descriptionMsg}}</div>
+			<div class="description" :class="{error:loginError}">
+				<template v-if="!loginError">{{$ml.get('loginDescription')}}</template>
+				<template v-if="loginError">{{$ml.get('loginDescriptionError')}}</template>
+			</div>
 			<div class="form">
-				<input type="text" class="form-input" placeholder="Email" v-model="formUser.login">
+				<!-- <input type="text" class="form-input" placeholder="Email" v-model="formUser.login">
 				<input type="password" class="form-input" placeholder="Password" v-model="formUser.password">
 				<div class="save-login checkbox" @click="save = !save">
 					<div class="box" :class="{'active':save}"></div>
 					<div class="title">{{$ml.get('saveLogin')}}</div>
-				</div>
-				<button class="login-btn" @click="!inProgress ? login() : ''">{{$ml.get('loginBtn')}}</button>
+				</div> -->
+				<button class="login-btn" @click="!inProgress ? microsoftLogin() : ''">
+					<span></span>{{$ml.get('microsoftLogin')}}
+				</button>
 			</div>
 		</div>
 	</div>
@@ -49,29 +53,25 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters(['preferences','is_logged','user']),
-		//showing error msg
-		descriptionMsg: function(){
-			return !this.loginError ? this.$ml.get('loginDescription') : this.$ml.get('loginDescriptionError')
-		}
+		...mapGetters(['preferences','is_logged','user'])
 	},
 	mounted: async function () {
 		this.uiSetLang(navigator.language)
 		//on discord/mojang auth set token and check if account whitelisted
-		ipcRenderer.on('discord-oauth-reply', async (event, auth) => {
-			this.setToken(auth)
-			await this.getDiscordUser()
-			ipcRenderer.send('check-discord-account', this.user.user.id)
-		})
-		ipcRenderer.on('user-confirm', async (event, profile) => {
-			if(profile){
-				await this.setAccount(profile)
-				this.$router.push('Main')
-			} else {
-				this.inProgress = false
-				this.loginError = true
-			}		
-		})
+		// ipcRenderer.on('discord-oauth-reply', async (event, auth) => {
+		// 	this.setToken(auth)
+		// 	await this.getDiscordUser()
+		// 	ipcRenderer.send('check-discord-account', this.user.user.id)
+		// })
+		// ipcRenderer.on('user-confirm', async (event, profile) => {
+		// 	if(profile){
+		// 		await this.setAccount(profile)
+		// 		this.$router.push('Main')
+		// 	} else {
+		// 		this.inProgress = false
+		// 		this.loginError = true
+		// 	}		
+		// })
 	},
 	methods: {
 		...mapActions(['getDiscordUser']),
@@ -97,17 +97,14 @@ export default {
 				this.loginError = true
 			})
 		},
-		//discord login
-		loginDiscord: function() {
-			ipcRenderer.send('discord-oauth', 'getToken');
-		},
 		close: function() {
 			ipcRenderer.send('window-close')
 		},
 		microsoftLogin: function() {
-			var client_id = '92425d35-b7ea-4608-b193-abf85dcfb95d'
-			var redirect_uri = 'http://127.0.0.1:25555'
+			var client_id = process.env.VUE_APP_AZURE_CLIENT_ID
+			var redirect_uri = process.env.VUE_APP_MICROSOFT_REDIRECT
 			var scopes = encodeURIComponent('XboxLive.signin offline_access')
+			console.log(`https://login.live.com/oauth20_authorize.srf?client_id=${client_id}&response_type=code&redirect_uri=${redirect_uri}&scope=${scopes}`)
 			ipcRenderer.send(
 				'startMicrosoftAuth',
 				`https://login.live.com/oauth20_authorize.srf?client_id=${client_id}&response_type=code&redirect_uri=${redirect_uri}&scope=${scopes}`
