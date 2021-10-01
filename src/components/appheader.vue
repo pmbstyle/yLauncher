@@ -3,7 +3,7 @@
 		<div class="drag"></div>
 		<div class="userwrap">
 			<div id="user">
-				<div class="avatar" :style="{ 'background-image': 'url(' + userAvatar + ')' }"></div>
+				<div class="avatar" :style="{ 'background-image': 'url(https://crafatar.com/renders/body/'+user.user.uuid+'?scale=5&default=MHF_Steve&overlay)' }"></div>
 			</div>
 			<div class="username">
 				<span>{{user.user.name}}</span>

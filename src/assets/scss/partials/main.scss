@@ -153,13 +153,14 @@
             margin-left:20px;
             margin-top:50px;
             .avatar {
-                width:76px;
-                height:76px;
+                width:70px;
+                height:70px;
                 position: relative;
                 margin-top: 10px;
                 margin-left: 10px;
-                background-size:cover;
+                background-size:contain;
                 background-position: center;
+                background-repeat: no-repeat;
                 &::after {
                     content:'';
                     width:76px;

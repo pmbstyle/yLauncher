@@ -32,6 +32,13 @@ export default ({
 				nameRu: 'Настройки',
 				view:'Settings',
 				is_active:false
+			},
+			{
+				id:3,
+				name:'Shop',
+				nameRu: 'Магазин',
+				view:'Shop',
+				is_active:false
 			}
 		],
 		uiStatus: {

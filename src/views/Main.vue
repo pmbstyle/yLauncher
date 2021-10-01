@@ -13,7 +13,7 @@
 				<wiki v-if="mainmenu[1].is_active"/>
 			</div>
 			<launch/>
-			<div class="footer-copyright"><span>yLauncher alpha (Work in progress)</span> © 2021 ytyaCraft</div>
+			<div class="footer-copyright"><span>yLauncher alpha (Work in progress)</span> © 2021 EternalRPG</div>
 		</div>
 	</div>
 </template>
@@ -44,7 +44,6 @@ export default {
 	watch: {
 		'preferences.lang': function(){
 			this.$ml.change(this.preferences.lang)
-			this.$forceUpdate()
 		}
 	},
 	computed: {
