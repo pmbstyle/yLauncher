@@ -9,6 +9,13 @@
 			<window-header/>
 			<div class="wrapper">
 				<debug v-if="preferences.debug != 'false' && uiStatus.showDebug"/>
+				<div id="main_row" v-if="mainmenu[0].is_active">
+					<news/>
+					<div>
+						<server-status/>
+						<vote/>
+					</div>
+				</div>
 				<settings v-if="mainmenu[2].is_active"/>
 				<wiki v-if="mainmenu[1].is_active"/>
 			</div>
@@ -23,6 +30,9 @@ import {ipcRenderer} from 'electron'
 import windowHeader from '../components/appheader.vue'
 import launch from '../components/lunch.vue'
 import debug from '../components/debug.vue'
+import news from '../components/news.vue'
+import serverStatus from '../components/server-status.vue'
+import vote from '../components/vote.vue'
 import settings from '../components/settings.vue'
 import wiki from '../components/wiki.vue'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
@@ -32,6 +42,9 @@ export default {
 		launch,
 		windowHeader,
 		debug,
+		news,
+		serverStatus,
+		vote,
 		settings,
 		wiki
 	},

@@ -27,11 +27,12 @@ export default new MLCreate({
             on: "Включено",
             off: "Выключено",
             save: "Сохранить",
-            categories: "Категории"
+            categories: "Категории",
+            readMore:"Подробнее"
 		}),
 		new MLanguage('en').create({
             microsoftLogin: "Microsoft Sign In",
-            loginDescription: "If you are didn't migrate your Mojang account to Microsoft yet, you can do it in your profile section on minecraft.net.",
+            loginDescription: "If you are didn't migrate your Mojang account to Microsoft yet, you can do it in your profile section on minecraft.net web site.",
             loginDescriptionError: "Access denied, invalid credentials",
             saveLogin: "Save email for next login",
             loginBtn: "Login",
@@ -49,7 +50,8 @@ export default new MLCreate({
             on: "On",
             off: "Off",
             save: "Save",
-            categories: "Wiki Categories"
+            categories: "Wiki Categories",
+            readMore: "Read More"
 		})
 	]
 })
