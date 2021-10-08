@@ -28,7 +28,9 @@ export default new MLCreate({
             off: "Выключено",
             save: "Сохранить",
             categories: "Категории",
-            readMore:"Подробнее"
+            readMore:"Подробнее",
+            serverStatus:"Статус сервера",
+            playersOnline:"Игроков онлайн"
 		}),
 		new MLanguage('en').create({
             microsoftLogin: "Microsoft Sign In",
@@ -51,7 +53,9 @@ export default new MLCreate({
             off: "Off",
             save: "Save",
             categories: "Wiki Categories",
-            readMore: "Read More"
+            readMore: "Read More",
+            serverStatus: "Server Status",
+            playersOnline: "Players Online"
 		})
 	]
 })
