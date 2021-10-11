@@ -12,10 +12,8 @@ if (setupEvents.handleSquirrelEvent()) {
 }
 const electronOauth2 = require('electron-oauth2')
 const path = require("path")
-const fs = require("fs")
 const http = require('http')
-const mongoose = require('mongoose')
-const profileModel = require('./models/profile')
+const { download } = require("electron-dl")
 const authWindowParams = {
   alwaysOnTop: true,
   autoHideMenuBar: true,
@@ -33,17 +31,6 @@ const oauthConfig = {
     redirectUri: 'http://localhost'
 }
 const discordOAuth = electronOauth2(oauthConfig, authWindowParams)
-
-mongoose.connect(process.env.VUE_APP_MONGODB_SRV, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false
-}).then(()=> {
-    console.log('Connected to MongoDB')
-}).catch((err) => {
-    console.log('Alarm!')
-    console.log(err)
-})
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -141,6 +128,11 @@ async function createWindow() {
       microsoftAuthStarted = true
       startMicrosoftAuthServer(event)
       createMsAuthWindow(url)
+  })
+  ipcMain.on('clientDownload', (event, info) => {
+      info.properties.onProgress = status => win.webContents.send("download progress", status)
+      download(BrowserWindow.getFocusedWindow(), info.url, info.properties)
+        .then(dl => win.webContents.send("download complete", dl.getSavePath()))
   })
 }
 

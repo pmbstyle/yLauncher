@@ -9,8 +9,11 @@
     </button>
 </template>
 <script>
+import {ipcRenderer} from 'electron'
 const { Client, Authenticator } = require('minecraft-launcher-core')
 import {mapGetters, mapActions, mapMutations} from 'vuex'
+const admZip = require('adm-zip')
+const fs = require('fs')
 export default {
     name:'launch',
     data: function() {
@@ -33,9 +36,33 @@ export default {
             }
         },
 	},
+    mounted: function() {
+        this.downloadClient()
+    },
     methods: {
 		...mapActions([]),
 		...mapMutations(['pushLog','clearLog', 'playBtnStatus','debugStatus']),
+        downloadClient: function() {
+            ipcRenderer.send(
+				'clientDownload',{
+                url: "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-zip-file.zip",
+                properties: {directory: "./tmp"}}
+			)
+            ipcRenderer.on("download progress", (event, progress) => {
+                console.log(progress); // Progress in fraction, between 0 and 1
+                //const progressInPercentages = progress * 100; // With decimal point and a bunch of numbers
+                //const cleanProgressInPercentages = Math.floor(progress * 100); // Without decimal point
+            }) 
+            ipcRenderer.on("download complete", (event, path) => {
+                console.log(path);
+                var zip = new admZip(path);
+                console.log('start unzip');
+                zip.extractAllTo("./client", true);
+                //zip.extractEntryTo('./client', './client', false, true);
+                console.log('finished unzip');
+                fs.unlinkSync(path,console.log('temp file deleted'));
+            })     
+        },
 		play: function() {
             this.clearLog()
             let opts = {

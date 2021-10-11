@@ -15,12 +15,6 @@
 				<template v-if="loginError">{{$ml.get('loginDescriptionError')}}</template>
 			</div>
 			<div class="form">
-				<!-- <input type="text" class="form-input" placeholder="Email" v-model="formUser.login">
-				<input type="password" class="form-input" placeholder="Password" v-model="formUser.password">
-				<div class="save-login checkbox" @click="save = !save">
-					<div class="box" :class="{'active':save}"></div>
-					<div class="title">{{$ml.get('saveLogin')}}</div>
-				</div> -->
 				<button class="login-btn" @click="!inProgress ? microsoftLogin() : ''">
 					<span></span>{{$ml.get('microsoftLogin')}}
 				</button>
@@ -37,10 +31,6 @@ export default {
 	name: 'Login',
 	data: function(){
 		return {
-			formUser: {
-				login:'',
-				password:''
-			},
 			loginError:false,
 			save:false,
 			inProgress:false
@@ -57,21 +47,6 @@ export default {
 	},
 	mounted: async function () {
 		this.uiSetLang(navigator.language)
-		//on discord/mojang auth set token and check if account whitelisted
-		// ipcRenderer.on('discord-oauth-reply', async (event, auth) => {
-		// 	this.setToken(auth)
-		// 	await this.getDiscordUser()
-		// 	ipcRenderer.send('check-discord-account', this.user.user.id)
-		// })
-		// ipcRenderer.on('user-confirm', async (event, profile) => {
-		// 	if(profile){
-		// 		await this.setAccount(profile)
-		// 		this.$router.push('Main')
-		// 	} else {
-		// 		this.inProgress = false
-		// 		this.loginError = true
-		// 	}		
-		// })
 	},
 	methods: {
 		...mapActions(['getDiscordUser']),
