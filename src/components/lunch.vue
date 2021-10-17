@@ -9,7 +9,7 @@
     </button>
 </template>
 <script>
-const { Client, Authenticator } = require('minecraft-launcher-core')
+const { Client } = require('minecraft-launcher-core')
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 import clientUpdater from '@/services/client-updater'
 export default {
@@ -35,27 +35,50 @@ export default {
         },
 	},
     mounted: function() {
-        this.downloadClient()
+        this.clientManager()
     },
     methods: {
 		...mapActions([]),
 		...mapMutations(['pushLog','clearLog', 'playBtnStatus','debugStatus']),
-        downloadClient: async function() {
-            clientUpdater.updateClient()
+        clientManager: async function() {
+            let distroStatus = await clientUpdater.checkForUpdates()
+            console.log(distroStatus)
+            switch(distroStatus) {
+                case null:
+                    console.log('local distro is not exists')
+                    break
+                case false:
+                    console.log('client is up to date')
+                    break
+                default:
+                    console.log('downloading a client')
+                    clientUpdater.updateClient(distroStatus)
+                    break
+            }
+
         },
 		play: function() {
             this.clearLog()
             let opts = {
                 clientPackage: null,
-                authorization: Authenticator.getAuth(this.user.account.minecraftID),
-                root: ".ylauncher/",
-                version: {
-                    number: "1.16.5",
-                    type: "release",
+                authorization: {
+                    access_token: this.user.auth.token,
+                    client_token: this.user.auth.token,
+                    uuid: this.user.user.uuid,
+                    name: this.user.user.name,
+                    user_properties: '{}',
+                    meta: {
+                        type: 'msa'
+                    }
                 },
-                forge: './forge/forge-1.16.5-36.1.31-installer.jar',
+                root: 'client/',
+                version: {
+                    number: '1.17.1',
+                    type: 'release'
+                },
+                javaPath: 'C:/Code/ylauncher/java/bin/javaw.exe',
                 server:{
-                    host:"mc.ytyacraft.ru"
+                    host:"localhost"
                 },
                 memory: {
                     max: this.client.settings.maxRam,
@@ -69,7 +92,7 @@ export default {
             launcher.on('close', () => {
                 this.pushLog({type:'client', content:'The client sent close callback'})
                 this.playBtnStatus('play')
-                this.debugStatus(false)
+                // this.debugStatus(false)
             })
             launcher.on('progress', (e) => {
                 this.pushLog({type:'download', content:e})
@@ -80,7 +103,10 @@ export default {
                 e.indexOf('[CHAT]') === -1 ? this.pushLog({type:'client', content:e}) : ''
                 this.playBtnStatus('playing')
             })
-            launcher.on('error', (e) => this.pushLog({type:'error', content:e.toString('utf-8')}))
+            launcher.on('error', (e) => {
+                this.pushLog({type:'error', content:e.toString('utf-8')})
+                this.playBtnStatus('play')
+            })
 		}
 	}
 }
