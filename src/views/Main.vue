@@ -20,7 +20,8 @@
 				<wiki v-if="mainmenu[1].is_active"/>
 			</div>
 			<launch/>
-			<div class="footer-copyright"><span>yLauncher alpha (Work in progress)</span> © 2021 EternalRPG</div>
+			<download-status v-if="uiStatus.download.status"/>
+			<div class="footer-copyright"><span>yLauncher alpha (Work in progress)</span> © 2021 Eternal RPG</div>
 		</div>
 	</div>
 </template>
@@ -35,11 +36,13 @@ import serverStatus from '../components/server-status.vue'
 import vote from '../components/vote.vue'
 import settings from '../components/settings.vue'
 import wiki from '../components/wiki.vue'
+import downloadStatus from '../components/download.vue'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 export default {
 	name: 'Main',
 	components: {
 		launch,
+		downloadStatus,
 		windowHeader,
 		debug,
 		news,
@@ -66,10 +69,18 @@ export default {
 		this.uiSetLang(navigator.language)
 		//setting up login window size
 		ipcRenderer.send('main-window')
+		ipcRenderer.on("download progress", (event, progress) => {
+            //callback for client download
+			this.updateDownload({
+				status:true,
+				percentage:Math.round(progress.percent*100),
+				total:Math.round(progress.totalBytes / 1000000)
+			})
+        })
 	},
 	methods: {
 		...mapActions([]),
-		...mapMutations(['uiSetLang']),
+		...mapMutations(['uiSetLang','updateDownload']),
 		close: function() {
 			ipcRenderer.send('window-close')
 		}

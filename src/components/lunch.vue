@@ -2,7 +2,7 @@
     <button
         class="play-btn"
         :class="uiStatus.playButton"
-        @click="uiStatus.playButton == 'play' ? play() : ''"
+        @click="buttonAction()"
         :disabled="inProgress"
     >
     {{playBtnText}}
@@ -16,13 +16,18 @@ export default {
     name:'launch',
     data: function() {
         return {
-            inProgress:false
+            distroStatus:'',
+            inProgress:true
         }
     },
     computed: {
 		...mapGetters(['client','user', 'uiStatus', 'preferences']),
         playBtnText: function() {
             switch (this.uiStatus.playButton) {
+                case 'install':
+                    return this.preferences.lang == 'en' ? 'Install' : 'Установка'
+                case 'update':
+                    return this.preferences.lang == 'en' ? 'Update' : 'Обновление'
                 case 'play':
                     return this.preferences.lang == 'en' ? 'Play' : 'Играть'
                 case 'playing':
@@ -34,28 +39,49 @@ export default {
             }
         },
 	},
-    mounted: function() {
-        this.clientManager()
+    mounted: async function() {
+        await this.clientManager()
+        this.inProgress = false
     },
     methods: {
 		...mapActions([]),
 		...mapMutations(['pushLog','clearLog', 'playBtnStatus','debugStatus']),
         clientManager: async function() {
-            let distroStatus = await clientUpdater.checkForUpdates()
-            console.log(distroStatus)
-            switch(distroStatus) {
+            this.distroStatus = await clientUpdater.checkForUpdates()
+            switch(this.distroStatus) {
                 case null:
                     console.log('local distro is not exists')
+                    this.playBtnStatus('install')
                     break
                 case false:
                     console.log('client is up to date')
+                    this.playBtnStatus('play')
                     break
                 default:
                     console.log('downloading a client')
-                    clientUpdater.updateClient(distroStatus)
+                    this.playBtnStatus('update')
                     break
             }
-
+        },
+        buttonAction: function() {
+            console.log('btn clicked')
+            switch(this.uiStatus.playButton) {
+                case 'install':
+                    clientUpdater.updateClient(this.distroStatus)
+                    break
+                case 'update':
+                    clientUpdater.updateClient(this.distroStatus)
+                    break
+                case 'play':
+                    this.play()
+                    break
+                case 'playing':
+                    break
+                case 'launching':
+                    break
+                default:
+                    return false
+            }
         },
 		play: function() {
             this.clearLog()

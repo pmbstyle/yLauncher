@@ -43,6 +43,12 @@ export default ({
 		],
 		uiStatus: {
 			playButton:'play',
+			download: {
+				status: false,
+				percentage:0,
+				total:0,
+				stage:'downloading'
+			},
 			showDebug: false
 		}
 	},
@@ -78,6 +84,14 @@ export default ({
 		},
 		savePreferences: function(state, data) {
 			state.preferences = data
+		},
+		updateDownload: function(state, data) {
+			state.uiStatus.download = {
+				status:data.status,
+				percentage:data.percentage,
+				total:data.total,
+				stage:data.stage
+			}
 		}
 	},
 	getters:{

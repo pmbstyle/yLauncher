@@ -31,21 +31,25 @@ module.exports = {
     updateClient: async(version) => {
         //downloading a client archive
         let distroHost = process.env.VUE_APP_DISTRO_HOST
+        ipcRenderer.send('download progress',{
+            status: true,
+            percentage: 0,
+            total: 0,
+            stage: 'downloading'
+        })
         ipcRenderer.send(
             'clientDownload', {
                 url: distroHost + 'versions/' + version + '/client.zip',
                 properties: { directory: os.tmpdir() }
         }
         )
-        ipcRenderer.on("download progress", (event, progress) => {
-            //callback for client download
-            let percent = Math.round(progress.percent*100)
-            let total = Math.round(progress.totalBytes / 1000000)
-            console.log('Download Progress: ' + percent)
-            console.log('TotalMb:' + total + ' Mb')
-            console.log(progress)
-        })
         ipcRenderer.on("download complete", async (event, filePath) => {
+            ipcRenderer.send('download progress', {
+                status: true,
+                percentage: 0,
+                total: 0,
+                stage: 'unpacking'
+            })
             //client downloaded to a temp folder
             console.log(filePath)
             console.log('prepairing a dir')
@@ -61,6 +65,12 @@ module.exports = {
             zip.extractAllTo("./client", true)
             //unziping complete, removing temp file
             console.log('finished unzip')
+            ipcRenderer.send('download progress', {
+                status: false,
+                percentage: 0,
+                total: 0,
+                stage: 'unpacking'
+            })
             fs.unlinkSync(filePath, console.log('temp file deleted'))
         })
     }
