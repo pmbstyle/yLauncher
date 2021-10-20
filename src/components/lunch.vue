@@ -11,7 +11,7 @@
 <script>
 const { Client } = require('minecraft-launcher-core')
 import {mapGetters, mapActions, mapMutations} from 'vuex'
-import clientUpdater from '@/services/client-updater'
+import { checkForUpdates, updateClient } from '@/services/client-updater'
 export default {
     name:'launch',
     data: function() {
@@ -31,6 +31,12 @@ export default {
                 case 'updating':
                     return this.preferences.lang == 'en' ? 'Updating' : 'Обновляем'
                 case 'play':
+                    this.updateDownload({
+                        status: false,
+                        percentage: 0,
+                        total: 0,
+                        stage: ''
+                    })
                     return this.preferences.lang == 'en' ? 'Play' : 'Играть'
                 case 'playing':
                     return this.preferences.lang == 'en' ? 'Playing' : 'Играем'
@@ -49,9 +55,9 @@ export default {
     },
     methods: {
 		...mapActions([]),
-		...mapMutations(['pushLog','clearLog', 'playBtnStatus','debugStatus']),
+		...mapMutations(['pushLog','clearLog','playBtnStatus','debugStatus','updateDownload']),
         clientManager: async function() {
-            this.distroStatus = await clientUpdater.checkForUpdates()
+            this.distroStatus = await checkForUpdates()
             switch(this.distroStatus) {
                 case null:
                     console.log('local distro is not exists')
@@ -74,10 +80,10 @@ export default {
         buttonAction: function() {
             switch(this.uiStatus.playButton) {
                 case 'install':
-                    clientUpdater.updateClient(this.distroStatus)
+                    updateClient(this.distroStatus)
                     break
                 case 'update':
-                    clientUpdater.updateClient(this.distroStatus)
+                    updateClient(this.distroStatus)
                     break
                 case 'play':
                     this.play()
