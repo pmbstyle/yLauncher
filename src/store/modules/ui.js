@@ -86,6 +86,7 @@ export default ({
 			state.preferences = data
 		},
 		updateDownload: function(state, data) {
+			console.log(data)
 			state.uiStatus.download = {
 				status:data.status,
 				percentage:data.percentage,

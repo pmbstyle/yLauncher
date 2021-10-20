@@ -28,12 +28,16 @@ export default {
                     return this.preferences.lang == 'en' ? 'Install' : 'Установка'
                 case 'update':
                     return this.preferences.lang == 'en' ? 'Update' : 'Обновление'
+                case 'updating':
+                    return this.preferences.lang == 'en' ? 'Updating' : 'Обновляем'
                 case 'play':
                     return this.preferences.lang == 'en' ? 'Play' : 'Играть'
                 case 'playing':
                     return this.preferences.lang == 'en' ? 'Playing' : 'Играем'
                 case 'launching':
                     return this.preferences.lang == 'en' ? 'Launching' : 'Запускаем'
+                case 'error':
+                    return this.preferences.lang == 'en' ? 'Error' : 'Ошибка'
                 default:
                     return this.preferences.lang == 'en' ? 'Play' : 'Играть'
             }
@@ -57,14 +61,17 @@ export default {
                     console.log('client is up to date')
                     this.playBtnStatus('play')
                     break
+                case 'error':
+                    console.log('error while updating')
+                    this.playBtnStatus('play')
+                    break
                 default:
-                    console.log('downloading a client')
+                    console.log('ready to download a client')
                     this.playBtnStatus('update')
                     break
             }
         },
         buttonAction: function() {
-            console.log('btn clicked')
             switch(this.uiStatus.playButton) {
                 case 'install':
                     clientUpdater.updateClient(this.distroStatus)

@@ -129,7 +129,11 @@ async function createWindow() {
 		createMsAuthWindow(url)
 	})
 	ipcMain.on('clientDownload', (event, info) => {
-		info.properties.onProgress = status => win.webContents.send("download progress", status)
+		info.properties.onProgress = status => {
+			status.status = true
+			status.stage = 'downloading'
+			win.webContents.send("download progress", status)
+		}
 		download(BrowserWindow.getFocusedWindow(), info.url, info.properties)
 			.then(dl => win.webContents.send("download complete", dl.getSavePath()))
 	})

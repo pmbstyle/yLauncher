@@ -72,9 +72,10 @@ export default {
 		ipcRenderer.on("download progress", (event, progress) => {
             //callback for client download
 			this.updateDownload({
-				status:true,
+				status:progress.status,
 				percentage:Math.round(progress.percent*100),
-				total:Math.round(progress.totalBytes / 1000000)
+				total:Math.round(progress.totalBytes / 1000000),
+				stage: progress.stage
 			})
         })
 	},
