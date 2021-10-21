@@ -42,7 +42,7 @@ export default ({
 			}
 		],
 		uiStatus: {
-			playButton:'play',
+			playButton:'',
 			download: {
 				status: false,
 				percentage:0,

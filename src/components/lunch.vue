@@ -11,12 +11,14 @@
 <script>
 const { Client } = require('minecraft-launcher-core')
 import {mapGetters, mapActions, mapMutations} from 'vuex'
-import { checkForUpdates, updateClient } from '@/services/client-updater'
+import { checkForUpdates, updateClient, checkForJavaUpdates } from '@/services/client-updater'
 export default {
     name:'launch',
     data: function() {
         return {
             distroStatus:'',
+            javaStatus:'',
+            javaChecked: false,
             inProgress:true
         }
     },
@@ -37,6 +39,7 @@ export default {
                         total: 0,
                         stage: ''
                     })
+                    !this.javaChecked ? this.javaManager() : ''
                     return this.preferences.lang == 'en' ? 'Play' : 'Играть'
                 case 'playing':
                     return this.preferences.lang == 'en' ? 'Playing' : 'Играем'
@@ -69,7 +72,7 @@ export default {
                     break
                 case 'error':
                     console.log('error while updating')
-                    this.playBtnStatus('play')
+                    this.playBtnStatus('error')
                     break
                 default:
                     console.log('ready to download a client')
@@ -77,11 +80,27 @@ export default {
                     break
             }
         },
-        buttonAction: function() {
-            switch(this.uiStatus.playButton) {
-                case 'install':
-                    updateClient(this.distroStatus)
+        javaManager: async function() {
+            this.javaChecked = true
+            this.javaStatus = await checkForJavaUpdates()
+            switch(this.javaStatus) {
+                case false:
+                    console.log('java is up to date')
+                    this.playBtnStatus('play')
                     break
+                case 'error':
+                    console.log('error while updating')
+                    this.playBtnStatus('error')
+                    break
+                default:
+                    console.log('ready to download java')
+                    this.playBtnStatus('updating')
+                    break
+            }
+        },
+        buttonAction: function() {
+            console.log('button clicked', this.uiStatus.playButton)
+            switch(this.uiStatus.playButton) {
                 case 'update':
                     updateClient(this.distroStatus)
                     break
@@ -113,9 +132,10 @@ export default {
                 root: 'client/',
                 version: {
                     number: '1.17.1',
-                    type: 'release'
+                    type: 'release',
+                    custom: 'fabric-loader-0.11.7-1.17.1'
                 },
-                javaPath: 'C:/Code/ylauncher/java/bin/javaw.exe',
+                javaPath: 'C:/Code/ylauncher/java/jdk-17+35/bin/javaw.exe',
                 server:{
                     host:"localhost"
                 },
