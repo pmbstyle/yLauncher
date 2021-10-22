@@ -53,6 +53,7 @@
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 import 'vue-range-component/dist/vue-range-slider.css'
 import VueRangeSlider from 'vue-range-component'
+import { writeLog } from '../services/log-manager'
 export default {
 	name:'settings',
 	data: function() {
@@ -90,6 +91,12 @@ export default {
 				lang:this.lang,
 				debug:this.debug
 			})
+			writeLog('Settings saved: ' + JSON.stringify({
+				minRam:this.minRam,
+				maxRam:this.maxRam,
+				debug:this.debug,
+				lang:this.lang
+			}))
 		}
 	}
 }

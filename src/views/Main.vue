@@ -38,6 +38,7 @@ import settings from '../components/settings.vue'
 import wiki from '../components/wiki.vue'
 import downloadStatus from '../components/download.vue'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
+import { writeLog } from '../services/log-manager'
 export default {
 	name: 'Main',
 	components: {
@@ -70,6 +71,14 @@ export default {
 		//setting up login window size
 		ipcRenderer.send('main-window')
 		ipcRenderer.on("download progress", (event, progress) => {
+			writeLog(JSON.stringify(
+				{
+					status:progress.status,
+					percentage:Math.round(progress.percent*100),
+					total:Math.round(progress.totalBytes / 1000000),
+					stage: progress.stage
+				}
+			))
             //callback for client download
 			this.updateDownload({
 				status:progress.status,

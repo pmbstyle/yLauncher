@@ -14,6 +14,7 @@
 </template>
 <script>
 import {mapGetters, mapActions} from 'vuex'
+import { writeLog } from '../services/log-manager'
 export default {
 	name:'serverStatus',
 	data: function() {
@@ -37,6 +38,7 @@ export default {
 				this.status = response.data.online
 				this.playersOnline = response.data.players.now
 				this.maxPlayers = response.data.players.max
+				writeLog('Server status recieved: '+response.data.players.now+'/'+response.data.players.max)
 			})
 		}
 	}

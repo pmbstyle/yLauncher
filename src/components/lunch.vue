@@ -11,7 +11,8 @@
 <script>
 const { Client } = require('minecraft-launcher-core')
 import {mapGetters, mapActions, mapMutations} from 'vuex'
-import { checkForUpdates, updateClient, checkForJavaUpdates } from '@/services/client-updater'
+import { checkForUpdates, updateClient, checkForJavaUpdates, updateDistro } from '@/services/client-updater'
+import { writeLog } from '../services/log-manager'
 export default {
     name:'launch',
     data: function() {
@@ -19,6 +20,7 @@ export default {
             distroStatus:'',
             javaStatus:'',
             javaChecked: false,
+            distroSaved: false,
             inProgress:true
         }
     },
@@ -40,6 +42,7 @@ export default {
                         stage: ''
                     })
                     !this.javaChecked ? this.javaManager() : ''
+                    !this.distroSaved ? updateDistro() : ''
                     return this.preferences.lang == 'en' ? 'Play' : 'Играть'
                 case 'playing':
                     return this.preferences.lang == 'en' ? 'Playing' : 'Играем'
@@ -63,18 +66,22 @@ export default {
             this.distroStatus = await checkForUpdates()
             switch(this.distroStatus) {
                 case null:
+                    writeLog('local distro is not exists')
                     console.log('local distro is not exists')
                     this.playBtnStatus('install')
                     break
                 case false:
+                    writeLog('client is up to date')
                     console.log('client is up to date')
                     this.playBtnStatus('play')
                     break
                 case 'error':
+                    writeLog('error while updating')
                     console.log('error while updating')
                     this.playBtnStatus('error')
                     break
                 default:
+                    writeLog('ready to download a client')
                     console.log('ready to download a client')
                     this.playBtnStatus('update')
                     break
@@ -85,21 +92,23 @@ export default {
             this.javaStatus = await checkForJavaUpdates()
             switch(this.javaStatus) {
                 case false:
+                    writeLog('java is up to date')
                     console.log('java is up to date')
                     this.playBtnStatus('play')
                     break
                 case 'error':
+                    writeLog('error while updating')
                     console.log('error while updating')
                     this.playBtnStatus('error')
                     break
                 default:
+                    writeLog('ready to download java')
                     console.log('ready to download java')
                     this.playBtnStatus('updating')
                     break
             }
         },
         buttonAction: function() {
-            console.log('button clicked', this.uiStatus.playButton)
             switch(this.uiStatus.playButton) {
                 case 'update':
                     updateClient(this.distroStatus)
@@ -119,6 +128,7 @@ export default {
             this.clearLog()
 
             let javaPath = process.env.VUE_APP_MODE == 'dev' ? 'C:/Code/ylauncher/java/jdk-17+35/bin/javaw.exe' : __dirname+'/java/jdk-17+35/bin/javaw.exe'
+            writeLog(process.env.VUE_APP_MODE,javaPath)
             console.log(process.env.VUE_APP_MODE,javaPath)
             let opts = {
                 clientPackage: null,
@@ -136,7 +146,7 @@ export default {
                 version: {
                     number: '1.17.1',
                     type: 'release',
-                    custom: 'fabric-loader-0.11.7-1.17.1'
+                    //custom: 'fabric-loader-0.11.7-1.17.1'
                 },
                 javaPath: javaPath,
                 server:{
@@ -152,11 +162,13 @@ export default {
             launcher.launch(opts)
 
             launcher.on('close', () => {
+                writeLog(JSON.stringify({type:'client', content:'The client sent close callback'}))
                 this.pushLog({type:'client', content:'The client sent close callback'})
                 this.playBtnStatus('play')
                 this.debugStatus(false)
             })
             launcher.on('progress', (e) => {
+                writeLog(JSON.stringify({type:'download', content:e}))
                 this.pushLog({type:'download', content:e})
                 this.playBtnStatus('launching')
                 this.debugStatus(true)
@@ -166,6 +178,7 @@ export default {
                 this.playBtnStatus('playing')
             })
             launcher.on('error', (e) => {
+                writeLog(JSON.stringify({type:'error', content:e.toString('utf-8')}))
                 this.pushLog({type:'error', content:e.toString('utf-8')})
                 this.playBtnStatus('play')
             })

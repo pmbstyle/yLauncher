@@ -25,8 +25,9 @@
 
 <script>
 import {ipcRenderer} from 'electron'
-import {mapGetters, mapActions, mapMutations} from 'vuex'
+import {mapGetters, mapMutations} from 'vuex'
 import Microsoft from '../services/microsoft'
+import { createLog, writeLog } from '../services/log-manager'
 export default {
 	name: 'Login',
 	data: function(){
@@ -47,32 +48,13 @@ export default {
 	},
 	mounted: async function () {
 		this.uiSetLang(navigator.language)
+		createLog()
+		writeLog('Login screen init')
 	},
 	methods: {
-		...mapActions(['getDiscordUser']),
 		...mapMutations(['uiSetLang','setUser','setToken','setAccount']),
-		//mojan login
-		login: async function() {
-			this.inProgress = true
-			this.loginError = false
-			let authpath = 'https://authserver.mojang.com/authenticate'
-			let minecraftAgent = {
-				name: 'Minecraft',
-				version: 1
-			}
-			this.axios.post(authpath,{
-				agent:minecraftAgent,
-				username:this.formUser.login,
-				password:this.formUser.password
-			}).then((response)=> {
-				this.setToken({accessToken:response.data.accessToken,clientToken:response.data.clientToken})
-				ipcRenderer.send('check-mojang-account', response.data.selectedProfile.name)
-			}).catch(() => {
-				this.inProgress = false
-				this.loginError = true
-			})
-		},
 		close: function() {
+			writeLog('Session terminated')
 			ipcRenderer.send('window-close')
 		},
 		microsoftLogin: function() {
@@ -90,9 +72,11 @@ export default {
 					if (result.errorCode !== undefined) {
 						switch (result.errorCode) {
 							case 'notOwnMinecraft':
+								writeLog(result.error)
 								throw new Error(result.error)
 
 							default:
+								writeLog(result.error)
 								throw new Error(result.error)
 						}
 					} else {
@@ -105,15 +89,18 @@ export default {
 							token:result.token,
 							refresh_token:result.refreshToken
 						})
+						writeLog('Signed In with MS account')
 						this.$router.push('Main')
 					}
 				} catch (error) {
+					writeLog(error)
 					console.log(error)
 					this.inProgress = false
 					this.loginError = true
 				}
 			})
 			ipcRenderer.once('microsoftAuthCancelled', () => {
+				writeLog('login flow canceled')
 				console.log('login canceled')
 				this.inProgress = false
 				this.loginError = true
