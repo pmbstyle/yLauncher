@@ -117,6 +117,9 @@ export default {
         },
 		play: function() {
             this.clearLog()
+
+            let javaPath = process.env.VUE_APP_MODE == 'dev' ? 'C:/Code/ylauncher/java/jdk-17+35/bin/javaw.exe' : __dirname+'/java/jdk-17+35/bin/javaw.exe'
+            console.log(process.env.VUE_APP_MODE,javaPath)
             let opts = {
                 clientPackage: null,
                 authorization: {
@@ -135,7 +138,7 @@ export default {
                     type: 'release',
                     custom: 'fabric-loader-0.11.7-1.17.1'
                 },
-                javaPath: 'C:/Code/ylauncher/java/jdk-17+35/bin/javaw.exe',
+                javaPath: javaPath,
                 server:{
                     host:"localhost"
                 },
@@ -151,7 +154,7 @@ export default {
             launcher.on('close', () => {
                 this.pushLog({type:'client', content:'The client sent close callback'})
                 this.playBtnStatus('play')
-                // this.debugStatus(false)
+                this.debugStatus(false)
             })
             launcher.on('progress', (e) => {
                 this.pushLog({type:'download', content:e})
