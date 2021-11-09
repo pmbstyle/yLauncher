@@ -61,7 +61,6 @@ export default {
 			var client_id = process.env.VUE_APP_AZURE_CLIENT_ID
 			var redirect_uri = process.env.VUE_APP_MICROSOFT_REDIRECT
 			var scopes = encodeURIComponent('XboxLive.signin offline_access')
-			console.log(`https://login.live.com/oauth20_authorize.srf?client_id=${client_id}&response_type=code&redirect_uri=${redirect_uri}&scope=${scopes}`)
 			ipcRenderer.send(
 				'startMicrosoftAuth',
 				`https://login.live.com/oauth20_authorize.srf?client_id=${client_id}&response_type=code&redirect_uri=${redirect_uri}&scope=${scopes}`

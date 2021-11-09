@@ -10,6 +10,7 @@ const redirect_uri = process.env.VUE_APP_MICROSOFT_REDIRECT
  */
 exports.authFromCode = async (code) => {
     try {
+        
         /* Microsoft Auth Code => Microsoft Token */
         const microsoftResult = await axios({
             method: 'post',

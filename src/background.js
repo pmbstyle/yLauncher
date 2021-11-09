@@ -4,16 +4,15 @@ import { app, protocol, BrowserWindow, ipcMain } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 if (require('electron-squirrel-startup')) app.quit()
-// if first time install on windows, do not run application, rather
+// if it's first time install on windows, do not run application, rather
 // let squirrel installer do its work
 const setupEvents = require('./installers/setup-events')
 if (setupEvents.handleSquirrelEvent()) {
 	process.exit()
 }
-const electronOauth2 = require('electron-oauth2')
-const path = require("path")
 const http = require('http')
 const { download } = require("electron-dl")
+/*Save discord rudiment in case of future use
 const authWindowParams = {
 	alwaysOnTop: true,
 	autoHideMenuBar: true,
@@ -21,6 +20,9 @@ const authWindowParams = {
 		nodeIntegration: false
 	}
 }
+
+const electronOauth2 = require('electron-oauth2')
+const path = require("path")
 const oauthConfig = {
 		clientId: process.env.VUE_APP_DISCORD_CLIENT_ID,
 		clientSecret: process.env.VUE_APP_DISCORD_CLIENT_SECRET,
@@ -29,7 +31,10 @@ const oauthConfig = {
 		useBasicAuthorizationHeader: false,
 		redirectUri: 'http://localhost'
 }
+
+
 const discordOAuth = electronOauth2(oauthConfig, authWindowParams)
+*/
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -85,6 +90,7 @@ async function createWindow() {
 	ipcMain.on('window-close', function () {
 		win.close();
 	})
+	/*Save discord rudiment in case of future use
 	//Discord auth window init
 	ipcMain.on('discord-oauth', (event, arg) => {
 		discordOAuth.getAccessToken({
@@ -95,7 +101,7 @@ async function createWindow() {
 		}, err => {
 			console.log('Error while getting token', err);
 		})
-	})
+	}) */
 	//Checking if user has been approved to join in Discord
 	ipcMain.on('check-discord-account', async (event, id) => {
 		let profileData

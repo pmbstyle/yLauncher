@@ -52,8 +52,6 @@ export default ({
 			showDebug: false
 		}
 	},
-	actions: {
-	},
 	mutations: {
 		uiSetLang: function(state,lang) {
             if(lang == 'ru' || lang == 'en') {

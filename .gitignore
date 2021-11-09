@@ -3,7 +3,10 @@ node_modules
 /dist
 /.ylauncher
 /tmp
-
+/client
+/java
+distribution.json
+/logs/*
 
 yarn.lock
 
