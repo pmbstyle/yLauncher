@@ -155,6 +155,10 @@ export default {
                 memory: {
                     max: this.client.settings.maxRam,
                     min: this.client.settings.minRam
+                },
+                window: {
+                    width: this.client.settings.width,
+                    height: this.client.settings.height,
                 }
             }
 

@@ -2,6 +2,7 @@
 	<div id="settings">
 		<div class="wrapper">
 			<div class="left">
+				<h2>{{$ml.get('launcherOptions')}}</h2>
 				<div class="settings-input">
 					<label>{{$ml.get('language')}}</label>
 					<select name="lang" id="lang" v-model="lang">
@@ -16,6 +17,9 @@
 						<option value="false" :selected="debug == false">{{$ml.get('off')}}</option>
 					</select>
 				</div>
+			</div>
+			<div class="right">
+				<h2>{{$ml.get('clientOptions')}}</h2>
 				<div class="settings-input">
 					<label>{{$ml.get('minRam')}}</label>
 					<vue-range-slider
@@ -40,10 +44,32 @@
 						:step="500">
 					</vue-range-slider>
 				</div>
-			</div>
-			<div class="right">
 				<div class="settings-input">
-					<button @click="saveSettings()">{{$ml.get('save')}}</button>
+					<label>{{$ml.get('clientWidth')}}</label>
+					<vue-range-slider
+						ref="sliderMax"
+						v-model="width"
+						:formatter="formatter2"
+						:min="400"
+						:max="2000"
+						:width="330"
+						:step="10">
+					</vue-range-slider>
+				</div>
+				<div class="settings-input">
+					<label>{{$ml.get('clientHeight')}}</label>
+					<vue-range-slider
+						ref="sliderMax"
+						v-model="height"
+						:formatter="formatter2"
+						:min="400"
+						:max="2000"
+						:width="330"
+						:step="10">
+					</vue-range-slider>
+				</div>
+				<div class="settings-input">
+					<button class="save-settings" @click="saveSettings()">{{$ml.get('save')}}</button>
 				</div>
 			</div>
 		</div>
@@ -60,9 +86,12 @@ export default {
 		return {
 			minRam:0,
 			maxRam:0,
+			width:800,
+			height:600,
 			debug:true,
 			lang:'',
-			formatter: null
+			formatter: null,
+			formatter2: null
 		}
 	},
 	components: {
@@ -74,9 +103,12 @@ export default {
 	mounted: function (){
 		this.minRam = this.client.settings.minRam
 		this.maxRam = this.client.settings.maxRam
+		this.width = this.client.settings.width
+		this.height = this.client.settings.height
 		this.debug = this.preferences.debug
 		this.lang = this.preferences.lang
 		this.formatter = value => `${value} Mb`
+		this.formatter2 = value => `${value} px`
 	},
 	methods: {
 		...mapActions([]),

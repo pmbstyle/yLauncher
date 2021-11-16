@@ -7,7 +7,9 @@ export default ({
 		client:{
 			settings:{
 				minRam:1000,
-				maxRam:2000
+				maxRam:2000,
+				width:800,
+				height:600
 			},
 			log:[]
 		},
