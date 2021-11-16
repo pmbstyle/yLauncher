@@ -117,6 +117,8 @@ export default {
 			this.saveClientSettings({
 				minRam:this.minRam,
 				maxRam:this.maxRam,
+				width:this.width,
+				heigh:this.height,
 				debug:this.debug
 			})
 			this.savePreferences({
@@ -126,6 +128,8 @@ export default {
 			writeLog('Settings saved: ' + JSON.stringify({
 				minRam:this.minRam,
 				maxRam:this.maxRam,
+				width:this.width,
+				heigh:this.height,
 				debug:this.debug,
 				lang:this.lang
 			}))
