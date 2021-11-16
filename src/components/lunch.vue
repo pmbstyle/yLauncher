@@ -71,8 +71,6 @@ export default {
                     this.playBtnStatus('install')
                     break
                 case false:
-                    writeLog('client is up to date')
-                    console.log('client is up to date')
                     this.playBtnStatus('play')
                     break
                 case 'error':
