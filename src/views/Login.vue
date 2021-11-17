@@ -93,14 +93,12 @@ export default {
 					}
 				} catch (error) {
 					writeLog(error)
-					console.log(error)
 					this.inProgress = false
 					this.loginError = true
 				}
 			})
 			ipcRenderer.once('microsoftAuthCancelled', () => {
-				writeLog('login flow canceled')
-				console.log('login canceled')
+				writeLog('Login flow canceled')
 				this.inProgress = false
 				this.loginError = true
 			})

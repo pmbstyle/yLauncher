@@ -14,21 +14,21 @@ export default ({
 	},
 	actions: {
 		getWikiCategories: async function({commit}){
-			let categories = await Api().get(process.env.VUE_APP_WEB_API_GATE+'/api/wiki-categories')
+			let categories = await Api().get(process.env.VUE_APP_WEB_API_GATE+'api/wiki-categories')
 			.then(response => {
 				return response.data
 			})
 			commit('setWikiCategories',categories)
 		},
 		getWikiPosts: async function({commit},id) {
-			let posts = await Api().get(process.env.VUE_APP_WEB_API_GATE+'/api/wiki-posts',{params:{category:id}})
+			let posts = await Api().get(process.env.VUE_APP_WEB_API_GATE+'api/wiki-posts',{params:{category:id}})
 			.then(response => {
 				return response.data
 			})
 			commit('setWikiPosts',posts)
 		},
 		getWikiPost: async function({commit},id) {
-            let post = await Api().get(process.env.VUE_APP_WEB_API_GATE+'/api/wiki-post/'+id)
+            let post = await Api().get(process.env.VUE_APP_WEB_API_GATE+'api/wiki-post/'+id)
 			.then(response => {
 				return response.data
 			})

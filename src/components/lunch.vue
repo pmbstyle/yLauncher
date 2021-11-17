@@ -66,23 +66,19 @@ export default {
             this.distroStatus = await checkForUpdates()
             switch(this.distroStatus) {
                 case null:
-                    writeLog('local distro is not exists')
-                    console.log('local distro is not exists')
+                    writeLog('Local distro is not exists')
                     this.playBtnStatus('install')
                     break
                 case false:
-                    writeLog('client is up to date')
-                    console.log('client is up to date')
+                    writeLog('Client is up to date')
                     this.playBtnStatus('play')
                     break
                 case 'error':
-                    writeLog('error while updating')
-                    console.log('error while updating')
+                    writeLog('Error while updating')
                     this.playBtnStatus('error')
                     break
                 default:
-                    writeLog('ready to download a client')
-                    console.log('ready to download a client')
+                    writeLog('Ready to download a client')
                     this.playBtnStatus('update')
                     break
             }
@@ -92,18 +88,15 @@ export default {
             this.javaStatus = await checkForJavaUpdates()
             switch(this.javaStatus) {
                 case false:
-                    writeLog('java is up to date')
-                    console.log('java is up to date')
+                    writeLog('Java is up to date')
                     this.playBtnStatus('play')
                     break
                 case 'error':
-                    writeLog('error while updating')
-                    console.log('error while updating')
+                    writeLog('Error while updating')
                     this.playBtnStatus('error')
                     break
                 default:
-                    writeLog('ready to download java')
-                    console.log('ready to download java')
+                    writeLog('Ready to download java')
                     this.playBtnStatus('updating')
                     break
             }
@@ -128,8 +121,8 @@ export default {
             this.clearLog()
 
             let javaPath = process.env.VUE_APP_MODE == 'dev' ? 'C:/Code/ylauncher/java/jdk-17+35/bin/javaw.exe' : __dirname+'/java/jdk-17+35/bin/javaw.exe'
-            writeLog(process.env.VUE_APP_MODE,javaPath)
-            console.log(process.env.VUE_APP_MODE,javaPath)
+            writeLog(process.env.VUE_APP_MODE)
+            writeLog(javaPath)
             let opts = {
                 clientPackage: null,
                 authorization: {
@@ -145,8 +138,7 @@ export default {
                 root: 'client/',
                 version: {
                     number: '1.17.1',
-                    type: 'release',
-                    //custom: 'fabric-loader-0.11.7-1.17.1'
+                    type: 'release'
                 },
                 javaPath: javaPath,
                 server:{
@@ -158,7 +150,7 @@ export default {
                 },
                 window: {
                     width: this.client.settings.width,
-                    height: this.client.settings.height,
+                    height: this.client.settings.height
                 }
             }
 
