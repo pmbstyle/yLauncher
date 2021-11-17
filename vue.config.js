@@ -4,9 +4,10 @@ module.exports = {
         nodeIntegration: true,
         builderOptions: {
           appId: 'com.ylauncher.app',
-          productName: 'ylauncher',
-          artifactName: '${productName} Setup ${version}.${ext}',
-          copyright: 'Copyright © 2021 ytyaCraft',
+          productName: 'yLauncher',
+          artifactName: '${productName}-Setup-${version}-${os}-${arch}.${ext}',
+          publish: [{provider: 'github', private: false, releaseType: 'release'}],
+          copyright: 'Copyright © 2021 Eternal Games',
           win: {
             icon: './icon.ico',
             target: 'squirrel'
@@ -14,6 +15,9 @@ module.exports = {
           squirrelWindows: {
             iconUrl: 'http://ytyacraft.ru/images/icon.ico',
             loadingGif: './setup.gif'
+          },
+          linux: {
+            executableName: 'yLauncher',
           }
         }
       }

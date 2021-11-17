@@ -6,7 +6,11 @@ const createLog = async () => {
 
     getDateTime()
 
-    fs.appendFile('./logs/log--'+fileName+'.txt', '', function (err) {
+    if (!fs.existsSync('./logs')) {
+        fs.mkdirSync('./logs');
+    }
+
+    fs.appendFile('./logs/log-'+fileName+'.txt', '', function (err) {
         if (err) throw err
         console.log('Log started on ' + fileName)
     })
@@ -15,7 +19,7 @@ const createLog = async () => {
 
 const writeLog = async (msg) => {
 
-    var stream = fs.createWriteStream('./logs/log--' + fileName + '.txt', { 'flags': 'a' })
+    var stream = fs.createWriteStream('./logs/log-' + fileName + '.txt', { 'flags': 'a' })
     stream.once('open', function () {
         stream.write(msg + "\r\n")
     })
@@ -38,7 +42,7 @@ const getDateTime = async () => {
 
     let seconds = date_ob.getSeconds()
 
-    fileName = year + "-" + month + "-" + date + "_" + hours + "_" + minutes + "_" + seconds
+    fileName = year + "-" + month + "-" + date + "-" + hours + "-" + minutes + "-" + seconds
 
 }
 
