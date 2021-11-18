@@ -42,7 +42,7 @@ export default {
                         stage: ''
                     })
                     !this.javaChecked ? this.javaManager() : ''
-                    !this.distroSaved ? updateDistro() : ''
+                    !this.distroSaved ? this.distroManager() : ''
                     return this.preferences.lang == 'en' ? 'Play' : 'Играть'
                 case 'playing':
                     return this.preferences.lang == 'en' ? 'Playing' : 'Играем'
@@ -101,6 +101,10 @@ export default {
                     break
             }
         },
+        distroManager: async function() {
+            await updateDistro()
+            this.distroSaved = true
+        },
         buttonAction: function() {
             switch(this.uiStatus.playButton) {
                 case 'update':
@@ -119,8 +123,9 @@ export default {
         },
 		play: function() {
             this.clearLog()
-
-            let javaPath = process.env.VUE_APP_MODE == 'dev' ? 'C:/Code/ylauncher/java/jdk-17+35/bin/javaw.exe' : __dirname+'/java/jdk-17+35/bin/javaw.exe'
+            let appPath = __dirname.split('\\resources\\')
+            appPath = appPath[0]
+            let javaPath = process.env.VUE_APP_MODE == 'dev' ? 'C:/Code/ylauncher/java/jdk-17+35/bin/javaw.exe' : appPath+'\\java\\jdk-17+35\\bin\\javaw.exe'
             writeLog(process.env.VUE_APP_MODE)
             writeLog(javaPath)
             let opts = {

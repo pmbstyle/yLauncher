@@ -1,6 +1,6 @@
 {
   "name": "ylauncher",
-  "version": "0.3.4",
+  "version": "0.3.8",
   "private": true,
   "description": "Eternal RPG Launcher",
   "author": "Eternal Games",
@@ -11,7 +11,7 @@
     "serve": "vue-cli-service serve",
     "build-and-publish": "yarn increment-version && vue-cli-service electron:build -p always appimage --win squirrel",
     "lint": "vue-cli-service lint",
-    "electron:build": "cross-env VUE_APP_MODE=prod vue-cli-service electron:build",
+    "electron:build": "cross-env VUE_APP_MODE=production vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps",

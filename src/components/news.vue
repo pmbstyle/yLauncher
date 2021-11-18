@@ -125,11 +125,11 @@ export default {
 			if(this.fullNews != null) {
 				this.news.map(item => {
 					if(item.id == this.fullNews) {
-						content = this.preferences.lang == 'en' ? item.full_text_en : item.full_text_ru
+						content = this.preferences.lang == 'en' ? `<div class="content">${item.full_text_en}</div>` : `<div class="content">${item.full_text_ru}</div>`
 						let title = this.preferences.lang == 'en' ? `<h2>${item.title_en}</h2>` : `<h2>${item.title_ru}</h2>`
 						let date = `<div class='date'>${item.date}</div>`
-						let img = `<div class='img-wrapper'><img src='${item.image}'/></div>`
-						content = title+date+img+content
+						let img = `<div class='img-wrapper' style='background-image:url(${item.image})'>${date}${title}</div>`
+						content = img+content
 					}
 				})
 			}
