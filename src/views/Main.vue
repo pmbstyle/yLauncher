@@ -21,7 +21,7 @@
 			</div>
 			<launch/>
 			<download-status v-if="uiStatus.download.status"/>
-			<div class="footer-copyright"><span>yLauncher alpha (Work in progress)</span> © 2021 Eternal RPG</div>
+			<div class="footer-copyright"><span>yLauncher alpha (Work in progress)</span> © 2021-2022 Eternal Games</div>
 		</div>
 	</div>
 </template>

@@ -22,6 +22,15 @@
 						<option value="false" :selected="debug == false">{{$ml.get('off')}}</option>
 					</select>
 				</div>
+				<div class="settings-input">
+					<label>
+						{{$ml.get('envSelect')}}
+					</label>
+					<select name="server" id="server" v-model="env">
+						<option value="test" :selected="env == 'test'">{{$ml.get('testEnv')}}</option>
+						<option value="live" :selected="env == 'live'">{{$ml.get('liveEnv')}}</option>
+					</select>
+				</div>
 			</div>
 			<div class="right">
 				<h2>{{$ml.get('clientOptions')}}</h2>
@@ -115,6 +124,7 @@ export default {
 			height:600,
 			debug:true,
 			lang:'',
+			env:'',
 			formatter: null,
 			formatter2: null
 		}
@@ -132,6 +142,7 @@ export default {
 		this.height = this.client.settings.height
 		this.debug = this.preferences.debug
 		this.lang = this.preferences.lang
+		this.env = this.preferences.env
 		this.formatter = value => `${value} Mb`
 		this.formatter2 = value => `${value} px`
 	},

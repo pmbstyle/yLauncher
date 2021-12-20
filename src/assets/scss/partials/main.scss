@@ -124,7 +124,7 @@
             font-weight: 600;
             user-select: none;
             &:hover {
-                background:url(../images/green-btn-hover.png) no-repeat 0 0;
+                background:url(../images/green-btn-hover.png) no-repeat 0 100%;
             }
             &.playing, &.launching, &.updating {
                 background:url(../images/yellow-btn.png) no-repeat 0 0;

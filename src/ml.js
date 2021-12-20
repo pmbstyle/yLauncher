@@ -34,7 +34,10 @@ export default new MLCreate({
             categories: "Категории",
             readMore:"Подробнее",
             serverStatus:"Статус сервера",
-            playersOnline:"Игроков онлайн"
+            playersOnline:"Игроков онлайн",
+            envSelect: "Сервер",
+            testEnv:"Тестовый сервер",
+            liveEnv:"Игровой сервер"
 		}),
 		new MLanguage('en').create({
             microsoftLogin: "Microsoft Sign In",
@@ -63,7 +66,10 @@ export default new MLCreate({
             categories: "Wiki Categories",
             readMore: "Read More",
             serverStatus: "Server Status",
-            playersOnline: "Players Online"
+            playersOnline: "Players Online",
+            envSelect: "Server",
+            testEnv:"Test server",
+            liveEnv:"Live server"
 		})
 	]
 })

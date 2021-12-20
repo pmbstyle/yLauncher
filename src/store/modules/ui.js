@@ -2,7 +2,8 @@ export default ({
 	state: {
 		preferences:{
             lang:'en',
-			debug: true
+			debug: true,
+			env:'test'
         },
 		client:{
 			settings:{
