@@ -205,6 +205,7 @@
             width:30px;
             height:30px;
             display:block;
+            background:url(../images/lightbulb-notactive.png) no-repeat 0 0;
             &.active {
                 background:url(../images/lightbulb-active.png) no-repeat 0 0;
             }

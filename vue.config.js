@@ -14,7 +14,7 @@ module.exports = {
           },
           squirrelWindows: {
             iconUrl: 'http://eternalrpg.com/icon.ico',
-            loadingGif: './setup.gif'
+            loadingGif: './setup.png'
           },
           linux: {
             executableName: 'yLauncher',

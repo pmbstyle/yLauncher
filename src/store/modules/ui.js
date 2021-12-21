@@ -38,7 +38,7 @@ export default ({
 			},
 			{
 				id:3,
-				name:'Shop',
+				name:'Store',
 				nameRu: 'Магазин',
 				view:'Shop',
 				is_active:false
@@ -101,6 +101,9 @@ export default ({
 		},
 		client(state) {
 			return state.client
+		},
+		clientSettings(state) {
+			return state.client.settings
 		},
 		mainmenu(state) {
 			return state.mainmenu

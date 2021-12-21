@@ -38,6 +38,7 @@ import settings from '../components/settings.vue'
 import wiki from '../components/wiki.vue'
 import downloadStatus from '../components/download.vue'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
+import { getConfiguration } from '../services/configuration.js'
 import { writeLog } from '../services/log-manager'
 export default {
 	name: 'Main',
@@ -68,6 +69,7 @@ export default {
 	},
 	mounted: async function () {
 		this.uiSetLang(navigator.language)
+		await getConfiguration()
 		//setting up login window size
 		ipcRenderer.send('main-window')
 		ipcRenderer.on("download progress", (event, progress) => {

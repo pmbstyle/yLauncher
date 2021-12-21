@@ -113,6 +113,7 @@
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 import 'vue-range-component/dist/vue-range-slider.css'
 import VueRangeSlider from 'vue-range-component'
+import { saveConfiguration } from '../services/configuration.js'
 import { writeLog } from '../services/log-manager'
 export default {
 	name:'settings',
@@ -149,23 +150,25 @@ export default {
 	methods: {
 		...mapActions([]),
 		...mapMutations(['saveClientSettings','savePreferences']),
-		saveSettings: function() {
+		saveSettings: async function() {
 			this.saveClientSettings({
 				minRam:this.minRam,
 				maxRam:this.maxRam,
 				width:this.width,
-				heigh:this.height,
+				height:this.height,
 				debug:this.debug
 			})
 			this.savePreferences({
 				lang:this.lang,
-				debug:this.debug
+				debug:this.debug,
+				env:this.env
 			})
+			await saveConfiguration()
 			writeLog('Settings saved: ' + JSON.stringify({
 				minRam:this.minRam,
 				maxRam:this.maxRam,
 				width:this.width,
-				heigh:this.height,
+				height:this.height,
 				debug:this.debug,
 				lang:this.lang
 			}))
