@@ -10,7 +10,7 @@
 </template>
 <script>
 const { Client } = require('minecraft-launcher-core')
-import {mapGetters, mapActions, mapMutations} from 'vuex'
+import {mapGetters, mapMutations} from 'vuex'
 import { checkForUpdates, updateClient, checkForJavaUpdates, updateDistro } from '@/services/client-updater'
 import { writeLog } from '../services/log-manager'
 export default {
@@ -24,6 +24,16 @@ export default {
             inProgress:true
         }
     },
+    watch: {
+		'uiStatus.maintenance': function(){
+			if(this.uiStatus.maintenance.status == 'on'){
+				writeLog('Server maintenance reported.')
+                this.playBtnStatus('maintenance')
+			} else {
+                this.uiStatus.playButton == 'maintenance' ? this.playBtnStatus('play') : ''
+            }
+		}
+	},
     computed: {
 		...mapGetters(['client','user', 'uiStatus', 'preferences']),
         playBtnText: function() {
@@ -48,6 +58,8 @@ export default {
                     return this.preferences.lang == 'en' ? 'Playing' : 'Играем'
                 case 'launching':
                     return this.preferences.lang == 'en' ? 'Launching' : 'Запускаем'
+                case 'maintenance':
+                    return this.preferences.lang == 'en' ? 'Maintenance' : 'Тех. работы'
                 case 'error':
                     return this.preferences.lang == 'en' ? 'Error' : 'Ошибка'
                 default:
@@ -60,7 +72,6 @@ export default {
         this.inProgress = false
     },
     methods: {
-		...mapActions([]),
 		...mapMutations(['pushLog','clearLog','playBtnStatus','debugStatus','updateDownload']),
         clientManager: async function() {
             this.distroStatus = await checkForUpdates()

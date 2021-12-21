@@ -126,8 +126,12 @@
             &:hover {
                 background:url(../images/green-btn-hover.png) no-repeat 0 100%;
             }
-            &.playing, &.launching, &.updating {
+            &.playing,
+            &.launching,
+            &.updating,
+            &.maintenance {
                 background:url(../images/yellow-btn.png) no-repeat 0 0;
+                cursor:default;
             }
             &.error {
                 background:url(../images/red-btn.png) no-repeat 0 0;
@@ -430,6 +434,15 @@
                         background:url(../images/lightbulb-notactive.png) no-repeat 0 0;
                     }
                 }
+            }
+            .maintenance {
+                text-align:left;
+                width:80%;
+                margin-top:20px;
+                padding:2px 6px;
+                background:$normal-red;
+                color:$gold-white;
+                font-family: Arial, Helvetica, sans-serif;
             }
             .players-online {
                 width:80%;

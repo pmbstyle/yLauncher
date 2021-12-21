@@ -1,3 +1,4 @@
+import Api from '../../helpers/api'
 export default ({
 	state: {
 		preferences:{
@@ -45,6 +46,7 @@ export default ({
 			}
 		],
 		uiStatus: {
+			maintenance:{},
 			playButton:'',
 			download: {
 				status: false,
@@ -53,6 +55,15 @@ export default ({
 				stage:'downloading'
 			},
 			showDebug: false
+		}
+	},
+	actions:{
+		checkMaintenance: async function({commit}){
+			let maintenance = await Api().get(process.env.VUE_APP_WEB_API_GATE+'api/maintenance')
+			.then(response => {
+				return response.data
+			})
+			commit('setMaintenance',maintenance)
 		}
 	},
 	mutations: {
@@ -93,6 +104,9 @@ export default ({
 				total:data.total,
 				stage:data.stage
 			}
+		},
+		setMaintenance: function(state, data) {
+			state.uiStatus.maintenance = data
 		}
 	},
 	getters:{

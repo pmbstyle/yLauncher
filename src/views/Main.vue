@@ -56,7 +56,8 @@ export default {
 	data: function(){
 		return {
 			inProgress:false,
-			log:[]
+			log:[],
+			timer:null
 		}
 	},
 	watch: {
@@ -67,9 +68,15 @@ export default {
 	computed: {
 		...mapGetters(['mainmenu','client','preferences','is_logged','user','uiStatus'])
 	},
+	beforeDestroy() {
+		clearInterval(this.timer)
+	},
 	mounted: async function () {
 		this.uiSetLang(navigator.language)
 		await getConfiguration()
+		this.timer = setInterval(async () => {
+			await this.checkMaintenance()
+		}, 120000)
 		//setting up login window size
 		ipcRenderer.send('main-window')
 		ipcRenderer.on("download progress", (event, progress) => {
@@ -91,7 +98,7 @@ export default {
         })
 	},
 	methods: {
-		...mapActions([]),
+		...mapActions(['checkMaintenance']),
 		...mapMutations(['uiSetLang','updateDownload']),
 		close: function() {
 			ipcRenderer.send('window-close')
