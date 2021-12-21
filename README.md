@@ -1,21 +1,25 @@
 
-![ytyacraft](http://ytyacraft.ru/images/PNG-Server-Icon_RPG.png)
+![ytyacraft](https://eternalrpg.com/logo-sm-square-ico.png)
 
     
 # yLauncher
 
-Custom Minecraft launcher for ytyaCraft RPG server
+Custom Minecraft launcher for Eternal RPG server
 
 
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
 
-`VUE_APP_DISCORD_CLIENT_ID`
+`VUE_APP_WEB_API_GATE`
 
-`VUE_APP_DISCORD_CLIENT_SECRET`
+`VUE_APP_AZURE_CLIENT_ID`
 
-`VUE_APP_MONGODB_SRV`
+`VUE_APP_MICROSOFT_REDIRECT`
+
+`VUE_APP_DISTRO_HOST`
+
+`GH_TOKEN` (release only)
 
   
 ## Dev Server & Build
@@ -23,17 +27,22 @@ To run this project, you will need to add the following environment variables to
 To run dev server use those commands
 
 ```bash
-  yarn
-  yarn electron:serve
+yarn
+yarn electron:serve
 ```
 
 To build project run
 
 ```bash
-  yarn electron:build
+yarn electron:build
 ```
-
 It will create win installer
+
+To build and publish new release run
+
+```bash
+yarn build-and-publish
+```
   
 ## Related
 
