@@ -10,9 +10,22 @@ export default ({
             category:{},
             posts:[],
             post:{}
+        },
+		news:{
+            posts:[],
+            post:{},
         }
 	},
 	actions: {
+		async getNewsPosts(ctx){
+            await Api().get(process.env.VUE_APP_WEB_API_GATE+'api/news')
+            .then(response => {
+                ctx.commit('setNewsPosts',response.data)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        },
 		getWikiCategories: async function({commit}){
 			let categories = await Api().get(process.env.VUE_APP_WEB_API_GATE+'api/wiki-categories')
 			.then(response => {
@@ -36,6 +49,9 @@ export default ({
         },
 	},
 	mutations: {
+		setNewsPosts: function(state,posts){
+            state.news.posts = posts
+        },
 		setWikiCategories: function(state,categories) {
 			state.wiki.categories = categories
 		},
@@ -47,6 +63,9 @@ export default ({
 		}
 	},
 	getters:{
+		newsPosts(state) {
+			return state.news.posts
+		},
 		wikiCategories(state) {
 			return state.wiki.categories
 		},
