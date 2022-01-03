@@ -75,7 +75,7 @@ const checkForJavaUpdates = async () => {
 
         writeLog('Java download required')
         //passing a version # to a download url
-        updateJava()
+        await updateJava()
 
     } else if (remoteDistro == undefined) {
 

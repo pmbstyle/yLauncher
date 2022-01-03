@@ -51,8 +51,9 @@ export default {
                         total: 0,
                         stage: ''
                     })
-                    !this.javaChecked ? this.javaManager() : ''
-                    !this.distroSaved ? this.distroManager() : ''
+                    if(!this.javaChecked) {
+                        this.javaManager()
+                    }
                     return this.preferences.lang == 'en' ? 'Play' : 'Играть'
                 case 'playing':
                     return this.preferences.lang == 'en' ? 'Playing' : 'Играем'
@@ -65,7 +66,7 @@ export default {
                 default:
                     return this.preferences.lang == 'en' ? 'Play' : 'Играть'
             }
-        },
+        }
 	},
     mounted: async function() {
         await this.clientManager()
@@ -116,10 +117,10 @@ export default {
             await updateDistro()
             this.distroSaved = true
         },
-        buttonAction: function() {
+        buttonAction: async function() {
             switch(this.uiStatus.playButton) {
                 case 'update':
-                    updateClient(this.distroStatus)
+                    await updateClient(this.distroStatus)
                     break
                 case 'play':
                     this.play()
