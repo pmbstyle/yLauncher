@@ -4,16 +4,20 @@ module.exports = {
         nodeIntegration: true,
         builderOptions: {
           appId: 'com.ylauncher.app',
-          productName: 'ylauncher',
-          artifactName: '${productName} Setup ${version}.${ext}',
-          copyright: 'Copyright © 2021 ytyaCraft',
+          productName: 'yLauncher',
+          artifactName: '${productName}-Setup-${version}-${os}-${arch}.${ext}',
+          publish: [{provider: 'github', private: false, releaseType: 'release'}],
+          copyright: 'Copyright © 2022 Eternal Games',
           win: {
             icon: './icon.ico',
             target: 'squirrel'
           },
           squirrelWindows: {
-            iconUrl: 'http://ytyacraft.ru/images/icon.ico',
-            loadingGif: './setup.gif'
+            iconUrl: 'http://eternalrpg.com/icon.ico',
+            loadingGif: './setup.png'
+          },
+          linux: {
+            executableName: 'yLauncher',
           }
         }
       }

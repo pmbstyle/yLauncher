@@ -12,29 +12,7 @@ if (setupEvents.handleSquirrelEvent()) {
 }
 const http = require('http')
 const { download } = require("electron-dl")
-/*Save discord rudiment in case of future use
-const authWindowParams = {
-	alwaysOnTop: true,
-	autoHideMenuBar: true,
-	webPreferences: {
-		nodeIntegration: false
-	}
-}
 
-const electronOauth2 = require('electron-oauth2')
-const path = require("path")
-const oauthConfig = {
-		clientId: process.env.VUE_APP_DISCORD_CLIENT_ID,
-		clientSecret: process.env.VUE_APP_DISCORD_CLIENT_SECRET,
-		authorizationUrl: 'https://discord.com/api/oauth2/authorize',
-		tokenUrl: 'https://discord.com/api/oauth2/token',
-		useBasicAuthorizationHeader: false,
-		redirectUri: 'http://localhost'
-}
-
-
-const discordOAuth = electronOauth2(oauthConfig, authWindowParams)
-*/
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -53,9 +31,6 @@ async function createWindow() {
 		frame:false,
 		useContentSize: true,
 		webPreferences: {
-			
-			// Use pluginOptions.nodeIntegration, leave this alone
-			// See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
 			nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
 			contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION,
 			webSecurity: false,
@@ -71,7 +46,9 @@ async function createWindow() {
 		createProtocol('app')
 		// Load the index.html when not in development
 		win.loadURL('app://./index.html')
+		//win.webContents.openDevTools() //DEV ONLY
 	}
+
 	ipcMain.on('main-window', () => {
 		win.setSize(1200, 775)
 	})
@@ -90,18 +67,6 @@ async function createWindow() {
 	ipcMain.on('window-close', function () {
 		win.close();
 	})
-	/*Save discord rudiment in case of future use
-	//Discord auth window init
-	ipcMain.on('discord-oauth', (event, arg) => {
-		discordOAuth.getAccessToken({
-			scope: 'identify'
-		})
-		.then(auth => {
-			event.sender.send('discord-oauth-reply', auth);
-		}, err => {
-			console.log('Error while getting token', err);
-		})
-	}) */
 	//Checking if user has been approved to join in Discord
 	ipcMain.on('check-discord-account', async (event, id) => {
 		let profileData
@@ -182,6 +147,8 @@ app.on('ready', async () => {
 		}
 	}
 	createWindow()
+	const updateApp = require('update-electron-app')
+	updateApp()
 })
 
 // Exit cleanly on request from parent process in development mode.

@@ -21,7 +21,7 @@
 			</div>
 			<launch/>
 			<download-status v-if="uiStatus.download.status"/>
-			<div class="footer-copyright"><span>yLauncher alpha (Work in progress)</span> © 2021 Eternal RPG</div>
+			<div class="footer-copyright"><span>yLauncher alpha (Work in progress)</span> © 2021-2022 Eternal Games</div>
 		</div>
 	</div>
 </template>
@@ -38,6 +38,7 @@ import settings from '../components/settings.vue'
 import wiki from '../components/wiki.vue'
 import downloadStatus from '../components/download.vue'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
+import { getConfiguration } from '../services/configuration.js'
 import { writeLog } from '../services/log-manager'
 export default {
 	name: 'Main',
@@ -55,7 +56,8 @@ export default {
 	data: function(){
 		return {
 			inProgress:false,
-			log:[]
+			log:[],
+			timer:null
 		}
 	},
 	watch: {
@@ -66,8 +68,15 @@ export default {
 	computed: {
 		...mapGetters(['mainmenu','client','preferences','is_logged','user','uiStatus'])
 	},
+	beforeDestroy() {
+		clearInterval(this.timer)
+	},
 	mounted: async function () {
 		this.uiSetLang(navigator.language)
+		await getConfiguration()
+		this.timer = setInterval(async () => {
+			await this.checkMaintenance()
+		}, 120000)
 		//setting up login window size
 		ipcRenderer.send('main-window')
 		ipcRenderer.on("download progress", (event, progress) => {
@@ -89,7 +98,7 @@ export default {
         })
 	},
 	methods: {
-		...mapActions([]),
+		...mapActions(['checkMaintenance']),
 		...mapMutations(['uiSetLang','updateDownload']),
 		close: function() {
 			ipcRenderer.send('window-close')

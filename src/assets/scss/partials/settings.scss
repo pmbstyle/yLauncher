@@ -68,6 +68,9 @@
         font-size:1rem;
         padding:2px 5px;
         outline:none;
+        option {
+            color:#000;
+        }
     }
     .save-settings {
         padding:5px 10px;
@@ -81,6 +84,12 @@
         transition: all .3s ease-in-out;
         &:hover {
             background:$dark-gold;
+        }
+    }
+    label svg {
+        cursor:pointer;
+        path {
+            fill:$gold-white;
         }
     }
 }

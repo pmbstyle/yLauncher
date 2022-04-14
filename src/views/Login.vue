@@ -25,7 +25,7 @@
 
 <script>
 import {ipcRenderer} from 'electron'
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapMutations, mapActions} from 'vuex'
 import Microsoft from '../services/microsoft'
 import { createLog, writeLog } from '../services/log-manager'
 export default {
@@ -41,18 +41,25 @@ export default {
 		'preferences.lang': function(){
 			this.$ml.change(this.preferences.lang)
 			this.$forceUpdate()
+		},
+		'uiStatus.maintenance': function(){
+			if(this.uiStatus.maintenance.status == 'on'){
+				writeLog('Server maintenance reported.')
+			}
 		}
 	},
 	computed: {
-		...mapGetters(['preferences','is_logged','user'])
+		...mapGetters(['preferences','is_logged','user','uiStatus'])
 	},
 	mounted: async function () {
 		this.uiSetLang(navigator.language)
 		createLog()
 		writeLog('Login screen init')
+		this.checkMaintenance()
 	},
 	methods: {
 		...mapMutations(['uiSetLang','setUser','setToken','setAccount']),
+		...mapActions(['checkMaintenance']),
 		close: function() {
 			writeLog('Session terminated')
 			ipcRenderer.send('window-close')
@@ -93,14 +100,12 @@ export default {
 					}
 				} catch (error) {
 					writeLog(error)
-					console.log(error)
 					this.inProgress = false
 					this.loginError = true
 				}
 			})
 			ipcRenderer.once('microsoftAuthCancelled', () => {
-				writeLog('login flow canceled')
-				console.log('login canceled')
+				writeLog('Login flow canceled')
 				this.inProgress = false
 				this.loginError = true
 			})

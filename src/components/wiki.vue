@@ -2,9 +2,6 @@
 	<div id="wiki">
 		<div class="wrapper">
 			<div class="left">
-				<div class="wiki-title">
-					<span>{{$ml.get('categories')}}</span>
-				</div>
 				<div class="content">
 					<div @click="getPosts(category.id)" v-for="category in wikiCategories" :key="category.id" class="wiki-content-list">
 						<p :class="{active:activeCategory == category.id}">{{category['name_'+preferences.lang]}}</p>
@@ -12,7 +9,7 @@
 				</div>
 			</div>
 			<div class="right">
-				<perfect-scrollbar ref="scroll" v-if="!inProgress">
+				<vue-custom-scrollbar :settings="scrollSettings" class="content">
 					<template v-if="current == 'Main'">
 						<div class="wiki-welcome">
 							<h2>Welcome to ytyaCraft Wiki</h2>
@@ -32,12 +29,14 @@
 							<div v-html="wikiPost['description_'+preferences.lang]"></div>
 						</div>
 					</template>
-				</perfect-scrollbar>
+				</vue-custom-scrollbar>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
+import vueCustomScrollbar from 'vue-custom-scrollbar'
+import "vue-custom-scrollbar/dist/vueScrollbar.css"
 import {mapGetters, mapActions} from 'vuex'
 export default {
 	name:'wiki',
@@ -45,8 +44,14 @@ export default {
 		return {
 			current:'Main',
 			activeCategory:'',
-			inProgress:false
+			inProgress:false,
+			scrollSettings: {
+				suppressScrollX: true
+			},
 		}
+	},
+	components: {
+		vueCustomScrollbar
 	},
 	computed: {
 		...mapGetters(['preferences','wikiCategories','wikiPosts','wikiPost']),
