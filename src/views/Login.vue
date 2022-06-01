@@ -6,14 +6,26 @@
 					<div class="close-ico"></div>
 				</div>
 			</div>
-			<div class="header">yLauncher<span>α</span></div>
-			<div class="logo_holder">
-				<div class="logo"></div>
+			<div class="drag-wrap"></div>
+            <div class="description">
+				<div class="server-status">
+					<div>
+						<span>Lobby:</span>
+						<span class="online"></span>
+					</div>
+					<div>
+						<span>Eternal Arena:</span>
+						<span class="online"></span>
+					</div>
+				</div>
+				<video autoplay muted>
+					<source src="videos/mc-intro.mp4" type="video/mp4">
+				</video> 
 			</div>
-			<div class="description" :class="{error:loginError}">
+			<!-- <div class="description" :class="{error:loginError}">
 				<template v-if="!loginError">{{$ml.get('loginDescription')}}</template>
 				<template v-if="loginError">{{$ml.get('loginDescriptionError')}}</template>
-			</div>
+			</div> -->
 			<div class="form">
 				<button class="login-btn" @click="!inProgress ? microsoftLogin() : ''">
 					<span></span>{{$ml.get('microsoftLogin')}}

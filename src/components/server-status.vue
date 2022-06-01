@@ -42,7 +42,7 @@ export default {
 	methods: {
 		...mapActions([]),
 		checkStatus: function() {
-			this.axios.get('https://mcapi.us/server/status?ip=mc.ytyacraft.ru').then(response => {
+			this.axios.get('https://mcapi.us/server/status?ip=play.eternalvanilla.com').then(response => {
 				this.status = response.data.online
 				this.playersOnline = response.data.players.now
 				this.maxPlayers = response.data.players.max

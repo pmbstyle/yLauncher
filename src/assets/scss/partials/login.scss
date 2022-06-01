@@ -4,38 +4,42 @@
     padding-top:10px;
     @include flex-column(center,center);
     .login {
-        width:572px;
-        height:500px;
+        width:877px;
+        height:444px;
         position: relative;
-        background:url(../images/login-background.png) no-repeat 0 0;
-        &:before {
-            content:'';
-            display:block;
-            width:100%;
-            height:100%;
-            position: absolute;
-            width: 556px;
-            height: 484px;
-            left: 9px;
-            top: 9px;
-            z-index: -1;
-            animation: bg-flicker 5s ease-in-out infinite;
-        }
+        background:url(../images/login_bg.png) no-repeat 0 0;
+        user-select:none;
+        // &:before {
+        //     content:'';
+        //     display:block;
+        //     width:100%;
+        //     height:100%;
+        //     position: absolute;
+        //     width: 556px;
+        //     height: 484px;
+        //     left: 9px;
+        //     top: 9px;
+        //     z-index: -1;
+        //     animation: bg-flicker 5s ease-in-out infinite;
+        // }
         .close {
-            top:-8px;
-            right:20px;
+            position:absolute;
+            bottom:218px;
+            right:120px;
+            cursor:pointer;
+            z-index:2;
+            user-select:none;
         }
         .header {
             width:100%;
             height:69px;
             @include flex-row(center, center);
-            background:url(../images/login-header.png) no-repeat center top;
+            // background:url(../images/login-header.png) no-repeat center top;
             color:$gold-white;
             font-size: 2em;
             margin-top: 10px;
             position: relative;
             user-select:none;
-            -webkit-app-region: drag;
             span {
                 color:$normal-red;
                 position: absolute;
@@ -47,7 +51,7 @@
         }
         .logo_holder {
             @include flex-row(center,center);
-            background:url(../images/main-wrapper-bg.jpg) no-repeat center;
+            // background:url(../images/main-wrapper-bg.jpg) no-repeat center;
             background-size: cover;
             width:calc(100% - 18px);
             height:270px;
@@ -59,15 +63,64 @@
                 background-size: cover;
             }
         }
+        .drag-wrap {
+            user-select:none;
+            -webkit-app-region: drag;
+            width:100%;
+            height:200px;
+        }
         .description {
             @include flex-row(center,center);
-            width:calc(100% - 60px);
-            height:100px;
-            padding:0 30px;
+            width:552px;
+            height:222px;
             color:$text-color;
             text-align:center;
             font-size:1.2em;
             user-select:none;
+            // background:url(../images/main-wrapper-bg.jpg) no-repeat center;
+            background-size:cover;
+            margin-left: 189px;
+            margin-top: 12px;
+            position: relative;
+            overflow: hidden;
+            video {
+                position: absolute;
+                right: 0;
+                top: -17px;
+                width: 100%;
+                height: auto;
+                background-size: cover;
+                opacity: .8;
+            }
+            .server-status {
+                position: absolute;
+                z-index:2;
+                top:80px;
+                left:20px;
+                width:calc(100% - 40px);
+                height:50px;
+                background:rgba(0,0,0,0.7);
+                border:$dark-gold 1px solid;
+                @include flex-row(space-around,center);
+                & > div {
+                    @include flex-row(center,center);
+                    span:first-child {
+                        color:$color-white;
+                        font-size:1.2em;
+                    }
+                    span:last-child{
+                        width:30px;
+                        height:30px;
+                        margin-left:10px;
+                        background-size: cover;
+                        &.online {
+                            background:url(../images/lightbulb-active.png) no-repeat center;
+                        }
+                    }
+                }
+                
+                
+            }
             &.error {
                 color:$normal-red;
             }
@@ -86,7 +139,8 @@
                 outline:none;
                 position: absolute;
                 bottom: -34px;
-                left: calc(50% - 138px);
+                left: calc(50% - 113px);
+                z-index:2;
                 cursor: pointer;
                 color:$gold-white;
                 text-shadow: rgba(0,0,0,.3) 1px 0px 3px;
@@ -94,6 +148,7 @@
                 text-transform: uppercase;
                 font-weight: 600;
                 @include flex-row(center,center);
+                -webkit-app-region: regular;
                 &:hover {
                     background:url(../images/green-btn-hover.png) no-repeat 0 100%;
                 }
